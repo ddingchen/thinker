@@ -19,9 +19,6 @@ class TestCase extends TestbenchTest
         parent::setUp();
 
         $this->disableExceptionHandling();
-
-        $this->loadLaravelMigrations();
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
     }
 
     protected function getEnvironmentSetUp($app)

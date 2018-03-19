@@ -31,7 +31,9 @@ class User
 
     public function login()
     {
-        $appUser = AppUser::where('ucenter_user_id', $this->id)->firstOrFail();
+        $model = app('auth')->getProvider()->createModel();
+        $fieldName = $model->field_name_of_ucenter_id ?: 'ucenter_user_id';
+        $appUser = $model->where($fieldName, $this->id)->firstOrFail();
 
         auth()->login($appUser);
 
