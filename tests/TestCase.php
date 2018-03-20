@@ -30,6 +30,10 @@ class TestCase extends TestbenchTest
             'database' => ':memory:',
             'prefix' => '',
         ]);
+        $app['config']->set(
+            'auth.providers.users.model', 
+            'Illuminate\Foundation\Auth\User'
+        );
     }
 
     protected function getPackageProviders($app)

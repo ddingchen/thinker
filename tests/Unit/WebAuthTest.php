@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\TestResponse;
 use Tests\TestCase;
 use Thinker\Facades\UCenter;
 use Thinker\Facades\UCenterApi;
+use Thinker\Models\User;
 
 
 class WebAuthTest extends TestCase
@@ -19,23 +20,6 @@ class WebAuthTest extends TestCase
         parent::setUp();
 
         $this->webAuth = UCenter::webAuth();
-    }
-    
-    public function test_check_result_is_true_if_the_user_have_authorized_successfully()
-    {
-        UCenterApi::fake();
-
-
-        $this->webAuth->user($authorizedCode = '123456');
-
-        $this->assertTrue($this->webAuth->check());
-    }
-
-    public function test_check_result_is_false_if_the_user_hasnt_authorized()
-    {
-        UCenterApi::fake();
-
-        $this->assertFalse($this->webAuth->check());
     }
 
     public function test_it_redirect_authorize_page()
@@ -53,7 +37,7 @@ class WebAuthTest extends TestCase
         $user = $this->webAuth->user($authorizedCode = '123456');
 
         $this->assertNotNull($user);
-        $this->assertEquals(session('ucenter.user'), $user);
+        $this->assertInstanceOf(User::class, $user);
     }
 
 }

@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use Illuminate\Contracts\Http\Kernel;
-use Illuminate\Foundation\Auth\User;
+use Illuminate\Foundation\Auth\User as AppUser;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 use Mockery;
@@ -11,6 +11,7 @@ use Tests\TestCase;
 use Thinker\Facades\UCenterApi;
 use Thinker\Middleware\OAuth;
 use Thinker\UCenter\WebAuth;
+
 
 class OAuthMiddlewareTest extends TestCase
 {
@@ -36,17 +37,21 @@ class OAuthMiddlewareTest extends TestCase
 
     public function test_it_redirect_back_if_authorized_successfully()
     {
+        $this->loadLaravelMigrations();
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        UCenterApi::fake();
         session()->put('pre_auth_url', 'http://target.url');
-        app()->singleton(WebAuth::class, function ($app) {
-            $faker = Mockery::mock(WebAuth::class);
-            $faker->shouldReceive('user')->andReturn('test user');
-            return $faker;
-        });
+        AppUser::forceCreate([
+            'name' => 'chen.d',
+            'email' => 'chen@d.com',
+            'password' => bcrypt(123456),
+            'ucenter_user_id' => 123,
+        ]);
 
         $response = $this->get('test?code=123456');
 
         $response->assertRedirect('http://target.url');
-        $response->assertSessionHas('ucenter.user', 'test user');
+        $this->assertTrue(auth()->check());
     }
 
 }

@@ -4,34 +4,21 @@ namespace Thinker\UCenter;
 
 use Thinker\Facades\UCenter;
 use Thinker\Facades\UCenterApi;
+use Thinker\Models\User;
 
 class WebAuth
 {
-
-    public function check()
-    {
-        return $this->user() && true;
-    }
 
     public function redirect()
     {
         return redirect(UCenterApi::urlOfAuthorizePage());
     }
 
-    public function user($code = null)
+    public function user($code)
     {
-        // retrieve user info from cache
-        if (!$code) {
-            return session()->get('ucenter.user');
-        }
-
         // retrieve user info by authorized code
         $accessToken = UCenterApi::getAccessTokenByCode($code);
         $user = UCenterApi::getUser($accessToken);
-
-        // cache user info
-        session()->put('ucenter.user', $user);
-
-        return $user;
+        return User::mapToModel($user, $accessToken);
     }
 }

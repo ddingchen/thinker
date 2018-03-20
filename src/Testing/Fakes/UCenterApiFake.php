@@ -36,7 +36,7 @@ class UCenterApiFake
     public function getUser()
     {
         return json_decode('{
-            "user_id": 1002,
+            "user_id": 123,
             "username": "",
             "email": "",
             "phone": "",

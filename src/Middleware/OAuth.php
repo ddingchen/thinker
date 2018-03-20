@@ -20,11 +20,11 @@ class OAuth
         $oauth = UCenter::webAuth();
 
         if ($code = $request->code) {
-            session()->put('ucenter.user', $oauth->user($code));
+            $oauth->user($code)->login();
             return redirect($request->session()->get('pre_auth_url'));
         }
 
-        if (!$oauth->check()) {
+        if (!auth()->check()) {
             $this->flashCurrentRequest($request);
             return $oauth->redirect();
         }
