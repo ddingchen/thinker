@@ -9,17 +9,17 @@ use Thinker\Exceptions\UCenterException;
 class Api
 {
 
-    protected $client;
+    public $client;
 
-    protected $api_root;
+    public $api_root;
 
-    protected $api_access_token;
+    public $api_access_token;
 
-    protected $client_id;
+    public $client_id;
 
-    protected $client_secret;
+    public $client_secret;
 
-    protected $redirect_uri;
+    public $redirect_uri;
 
     public function __construct(Client $client)
     {

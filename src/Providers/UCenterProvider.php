@@ -15,7 +15,9 @@ class UCenterProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->publishes([
+            __DIR__ . '/config/ucenter.php' => config_path('ucenter.php'),
+        ]);
     }
 
     /**
@@ -26,7 +28,9 @@ class UCenterProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(Api::class, function ($app) {
-            return new Api(app('GuzzleHttp\Client'));
+            $api = new Api(app('GuzzleHttp\Client'));
+            $api->loadConfig(config('ucenter'));
+            return $api;
         });
     }
 }
