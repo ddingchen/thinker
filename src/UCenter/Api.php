@@ -13,8 +13,6 @@ class Api
 
     public $root;
 
-    public $api_access_token;
-
     public $client_id;
 
     public $client_secret;
@@ -55,7 +53,7 @@ class Api
      */
     public function getAccessTokenByCode($code)
     {
-        $url = $this->root . $this->api_access_token;
+        $url = $this->root . '/api/oauth/accessToken';
         $response = $this->client->request("POST", $url, [
             'form_params' => [
                 'client_id' => $this->client_id,
@@ -82,7 +80,7 @@ class Api
      */
     public function getAccessTokenByPassword($username, $password)
     {
-        $url = $this->root . $this->api_access_token;
+        $url = $this->root . '/api/oauth/accessToken';
         $response = $this->client->request("POST", $url, [
             'form_params' => [
                 'client_id' => $this->client_id,
@@ -103,7 +101,7 @@ class Api
 
     public function refreshAccessToken($accessToken)
     {
-        $url = $this->root . $this->api_access_token;
+        $url = $this->root . '/api/oauth/accessToken';
         $response = $this->client->request("POST", $url, [
             'form_params' => [
                 'client_id' => $this->client_id,

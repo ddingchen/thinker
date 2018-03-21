@@ -2,7 +2,7 @@
 
 return [
 
-    'root' => env('UCENTER_ROOT', 'http://ucenter.test.thinkerx.com/'),
+    'root' => env('UCENTER_ROOT', 'http://ucenter.test.thinkerx.com'),
 
     'client_id' => env('UCENTER_CLIENT_ID', ''),
 
