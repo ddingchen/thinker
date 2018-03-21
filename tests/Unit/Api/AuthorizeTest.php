@@ -12,7 +12,7 @@ class AuthorizeTest extends TestCase
     public function test_it_returns_url_of_ucenter_authorize_page()
     {
         UCenterApi::loadConfig([
-            'api_root' => 'http://api.com',
+            'root' => 'http://api.com',
             'client_id' => '123456',
             'client_secret' => 'abc',
             'redirect_uri' => 'callback_url',
@@ -103,7 +103,7 @@ class AuthorizeTest extends TestCase
     public function test_it_returns_url_of_another_application()
     {
         UCenterApi::loadConfig([
-            'api_root' => 'http://api.com',
+            'root' => 'http://api.com',
             'client_id' => '123456',
             'client_secret' => 'abc',
             'redirect_uri' => 'callback_url',

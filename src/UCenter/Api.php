@@ -11,7 +11,7 @@ class Api
 
     public $client;
 
-    public $api_root;
+    public $root;
 
     public $api_access_token;
 
@@ -42,7 +42,7 @@ class Api
     {
         return sprintf(
             '%s/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code',
-            $this->api_root,
+            $this->root,
             $this->client_id,
             $this->redirect_uri
         );
@@ -55,7 +55,7 @@ class Api
      */
     public function getAccessTokenByCode($code)
     {
-        $url = $this->api_root . $this->api_access_token;
+        $url = $this->root . $this->api_access_token;
         $response = $this->client->request("POST", $url, [
             'form_params' => [
                 'client_id' => $this->client_id,
@@ -82,7 +82,7 @@ class Api
      */
     public function getAccessTokenByPassword($username, $password)
     {
-        $url = $this->api_root . $this->api_access_token;
+        $url = $this->root . $this->api_access_token;
         $response = $this->client->request("POST", $url, [
             'form_params' => [
                 'client_id' => $this->client_id,
@@ -103,7 +103,7 @@ class Api
 
     public function refreshAccessToken($accessToken)
     {
-        $url = $this->api_root . $this->api_access_token;
+        $url = $this->root . $this->api_access_token;
         $response = $this->client->request("POST", $url, [
             'form_params' => [
                 'client_id' => $this->client_id,
@@ -125,7 +125,7 @@ class Api
     {
         return sprintf(
             '%s/api/sso/redirect?access_token=%s&app_id=%s&domain_id=%s',
-            $this->api_root,
+            $this->root,
             $accessToken,
             $appId,
             $domainId
@@ -134,7 +134,7 @@ class Api
 
     public function getUser($accessToken)
     {
-        $url = $this->api_root . '/api/user';
+        $url = $this->root . '/api/user';
         $response = $this->client->request("GET", $url, [
             'query' => [
                 'access_token' => $accessToken,

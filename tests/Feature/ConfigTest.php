@@ -12,7 +12,7 @@ class ConfigTest extends TestCase
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('ucenter', [
-            'api_root' => 'http://api.com',
+            'root' => 'http://api.com',
             'client_id' => '123456',
             'client_secret' => 'abc',
             'redirect_uri' => 'callback_url',
@@ -23,7 +23,7 @@ class ConfigTest extends TestCase
     {
         $this->assertEquals(
             "http://api.com",
-            app(Api::class)->api_root
+            app(Api::class)->root
         );
     }
 
