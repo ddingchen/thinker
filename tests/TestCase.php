@@ -34,6 +34,7 @@ class TestCase extends TestbenchTest
             'auth.providers.users.model', 
             'Illuminate\Foundation\Auth\User'
         );
+        $app['config']->set('ucenter', []);
     }
 
     protected function getPackageProviders($app)
