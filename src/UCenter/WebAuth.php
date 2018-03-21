@@ -18,7 +18,7 @@ class WebAuth
     {
         // retrieve user info by authorized code
         $accessToken = UCenterApi::getAccessTokenByCode($code);
-        $user = UCenterApi::getUser($accessToken);
+        $user = UCenterApi::getUser($accessToken->access_token);
         return User::mapToModel($user, $accessToken);
     }
 }
