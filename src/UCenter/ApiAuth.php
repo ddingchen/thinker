@@ -4,6 +4,7 @@ namespace Thinker\UCenter;
 
 use Illuminate\Support\Facades\Cache;
 use Thinker\Facades\UCenterApi;
+use Thinker\Models\AccessToken;
 use Thinker\Models\User;
 
 
@@ -13,12 +14,20 @@ class ApiAuth
     public function user($username, $password)
     {
         // authorize by credentials
-        $accessToken = UCenterApi::getAccessTokenByPassword($username, $password);
+        $accessTokenData = UCenterApi::getAccessTokenByPassword($username, $password);
 
         // retrieve user info
-        $user = UCenterApi::getUser($accessToken);
+        $userData = UCenterApi::getUser($accessTokenData->access_token);
 
-        return User::mapToModel($user, $accessToken);
+        $user = new User($this->adaptUserModel($userData));
+        $user->hold(new AccessToken($accessTokenData));
+        return $user;
+    }
+
+    protected function adaptUserModel($data)
+    {
+        $data->id = $data->user_id;
+        return $data;
     }
 
 }

@@ -2,9 +2,6 @@
 
 namespace Thinker\Models;
 
-use Thinker\Testing\User as AppUser;
-
-
 class User
 {
 
@@ -16,17 +13,24 @@ class User
 
     public $phone;
 
-    public $accessToken;
+    public $access_token_model;
 
-    public static function mapToModel($data, $accessToken)
+    public function __construct($data)
     {
-        $user = new User;
-        $user->id = $data->user_id;
-        $user->username = $data->username;
-        $user->email = $data->email;
-        $user->phone = $data->phone;
-        $user->accessToken = $accessToken;
-        return $user;
+        foreach ($data as $field => $value) {
+            $this->$field = $value;
+        }
+    }
+
+    public function hold(AccessToken $accessToken)
+    {
+        $this->access_token_model = $accessToken;
+        return $this;
+    }
+
+    public function accessToken()
+    {
+        return $this->access_token_model;
     }
 
     public function login()
@@ -38,6 +42,16 @@ class User
         auth()->login($appUser);
 
         return $appUser;
+    }
+
+    public function __get($name)
+    {
+        if ($name == 'access_token') {
+            if (!$model = $this->access_token_model) {
+                return null;
+            }
+            return $model->access_token;
+        }
     }
 
 }

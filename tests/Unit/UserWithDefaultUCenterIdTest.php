@@ -33,9 +33,7 @@ class UserWithDefaultUCenterIdTest extends TestCase
             'ucenter_user_id' => 123,
         ]);
 
-        $user = new User;
-        $user->id = 123;
-        $user->username = 'chen.d';
+        $user = new User(['id' => 123]);
 
         $user->login();
 

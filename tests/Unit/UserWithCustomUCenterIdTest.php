@@ -33,9 +33,9 @@ class UserWithCustomUCenterIdTest extends TestCase
             'uc_uid' => 123,
         ]);
 
-        $user = new User;
-        $user->id = 123;
-        $user->username = 'chen.d';
+        $user = new User([
+            'id' => 123,
+        ]);
 
         $user->login();
 
