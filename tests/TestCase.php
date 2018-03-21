@@ -40,7 +40,7 @@ class TestCase extends TestbenchTest
     protected function getPackageProviders($app)
     {
         return [
-            'Thinker\Providers\UCenterProvider',
+            'Thinker\Providers\UCenterServiceProvider',
             'Orchestra\Database\ConsoleServiceProvider',
         ];
     }

@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Thinker\UCenter;
 use Thinker\UCenter\Api;
 
-class UCenterProvider extends ServiceProvider
+class UCenterServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -16,7 +16,7 @@ class UCenterProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/config/ucenter.php' => config_path('ucenter.php'),
+            __DIR__ . '/../config/ucenter.php' => config_path('ucenter.php'),
         ]);
     }
 
