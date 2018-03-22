@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Thinker\UCenter\Api;
 
 
-class ConfigTest extends TestCase
+class ConfigLoadTest extends TestCase
 {
 
     protected function getEnvironmentSetUp($app)

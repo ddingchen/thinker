@@ -13,7 +13,7 @@ use Thinker\Middleware\OAuth;
 use Thinker\UCenter\WebAuth;
 
 
-class OAuthMiddlewareTest extends TestCase
+class OAuthCheckTest extends TestCase
 {
 
     protected function setUp()
