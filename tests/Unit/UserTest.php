@@ -51,4 +51,17 @@ class UserTest extends TestCase
         $this->assertEquals('fake name', $this->user->username);
     }
 
+    public function test_it_may_update_props()
+    {
+        UCenterApi::fake();
+        
+        $this->user->update([
+            'username' => 'updated name',
+            'email' => 'updated email',
+        ]);
+
+        $this->assertEquals('updated name', $this->user->username);
+        $this->assertEquals('updated email', $this->user->email);
+    }
+
 }

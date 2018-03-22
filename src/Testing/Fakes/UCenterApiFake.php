@@ -57,4 +57,28 @@ class UCenterApiFake
         }');
     }
 
+    public function updateUser()
+    {
+        return json_decode('{
+            "user_id": 123,
+            "username": "updated name",
+            "email": "updated email",
+            "phone": "",
+            "details": {
+                "position": {
+                    "title": "职位",
+                    "value": ""
+                },
+                "address": {
+                    "title": "地址",
+                    "value": ""
+                },
+                "department": {
+                    "title": "部门",
+                    "value": ""
+                }
+            }
+        }');
+    }
+
 }

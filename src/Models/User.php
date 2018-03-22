@@ -55,6 +55,15 @@ class User
         return $this;
     }
 
+    public function update($data)
+    {
+        $user = UCenterApi::updateUser($this->access_token, $data);
+        foreach ($user as $field => $value) {
+            $this->$field = $value;
+        }
+        return $this;
+    }
+
     public function __get($name)
     {
         if ($name == 'access_token') {
