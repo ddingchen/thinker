@@ -2,6 +2,8 @@
 
 namespace Thinker\Models;
 
+use Thinker\Facades\UCenterApi;
+
 class User
 {
 
@@ -42,6 +44,15 @@ class User
         auth()->login($appUser);
 
         return $appUser;
+    }
+
+    public function fresh()
+    {
+        $user = UCenterApi::getUser($this->access_token);
+        foreach ($user as $field => $value) {
+            $this->$field = $value;
+        }
+        return $this;
     }
 
     public function __get($name)

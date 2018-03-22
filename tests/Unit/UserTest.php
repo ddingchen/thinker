@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use Thinker\Facades\UCenterApi;
 use Thinker\Models\AccessToken;
 use Thinker\Models\User;
 
@@ -39,6 +40,15 @@ class UserTest extends TestCase
     public function test_it_returns_access_token_string()
     {
         $this->assertEquals(789, $this->user->access_token);
+    }
+
+    public function test_it_may_reload_users_profile()
+    {
+        UCenterApi::fake();
+
+        $this->user->fresh();
+
+        $this->assertEquals('fake name', $this->user->username);
     }
 
 }

@@ -37,7 +37,7 @@ class UCenterApiFake
     {
         return json_decode('{
             "user_id": 123,
-            "username": "",
+            "username": "fake name",
             "email": "",
             "phone": "",
             "details": {
