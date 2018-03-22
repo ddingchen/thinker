@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature\AppUser;
 
 use Tests\TestCase;
 use Thinker\Models\User;
@@ -8,7 +8,7 @@ use Thinker\Testing\User as AppUser;
 use Thinker\Testing\UserWithCustomUCenterId as AppUserWithCustomUCenterId;
 
 
-class UserWithDefaultUCenterIdTest extends TestCase
+class UserWithCustomUCenterIdTest extends TestCase
 {
 
     protected function getEnvironmentSetUp($app)
@@ -17,27 +17,28 @@ class UserWithDefaultUCenterIdTest extends TestCase
 
         $app['config']->set(
             'auth.providers.users.model', 
-            AppUser::class
+            AppUserWithCustomUCenterId::class
         );
     }
 
-    public function test_it_login_as_an_application_user()
+    public function test_field_name_of_user_may_be_custom()
     {
         $this->loadLaravelMigrations();
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations_with_custom_field_name');
 
-        AppUser::forceCreate([
+        AppUserWithCustomUCenterId::forceCreate([
             'name' => 'chen.d',
             'email' => 'chen@d.com',
             'password' => bcrypt(123456),
-            'ucenter_user_id' => 123,
+            'uc_uid' => 123,
         ]);
 
-        $user = new User(['id' => 123]);
+        $user = new User([
+            'id' => 123,
+        ]);
 
         $user->login();
 
-        $this->assertTrue(auth()->check());
         $this->assertEquals(123, auth()->user()->ucenter_user_id);
     }
 
