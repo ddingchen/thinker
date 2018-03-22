@@ -24,7 +24,7 @@ class UserWithDefaultUCenterIdTest extends TestCase
     public function test_it_login_as_an_application_user()
     {
         $this->loadLaravelMigrations();
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        $this->loadMigrationsFrom('tests/database/migrations');
 
         AppUser::forceCreate([
             'name' => 'chen.d',

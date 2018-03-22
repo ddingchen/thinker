@@ -38,7 +38,7 @@ class OAuthMiddlewareTest extends TestCase
     public function test_it_redirect_back_if_authorized_successfully()
     {
         $this->loadLaravelMigrations();
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom('tests/database/migrations');
         UCenterApi::fake();
         session()->put('pre_auth_url', 'http://target.url');
         AppUser::forceCreate([

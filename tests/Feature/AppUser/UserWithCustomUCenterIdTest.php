@@ -24,7 +24,7 @@ class UserWithCustomUCenterIdTest extends TestCase
     public function test_field_name_of_user_may_be_custom()
     {
         $this->loadLaravelMigrations();
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations_with_custom_field_name');
+        $this->loadMigrationsFrom('tests/database/migrations_with_custom_field_name');
 
         AppUserWithCustomUCenterId::forceCreate([
             'name' => 'chen.d',
