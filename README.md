@@ -80,13 +80,9 @@ UCenter::webAuth()->redirect();
 $user = UCenter::webAuth()->user($code);
 $user = UCenter::apiAuth()->user($username, $password);
 
-// 设置默认用户/获取默认用户
-$user->asDefault();
-$user = UCenter::user();
-
 // 可用API接口
-$user->profile();
-$user->profile()->update(['username' => 'chen.d']);
+$user->fresh();
+$user->update(['username' => 'chen.d']);
 $user->access_token;
 $user->accessToken();
 $user->accessToken()->refresh();
@@ -102,7 +98,7 @@ $user->goto($appId, $domainId)->redirect();
 $user->userService()->register($phone, $password, $username);
 $user->userService()->search($phone);
 $user->userService()->searchByName($username);
-$user->userService()->asUser($userId)->profile();
+$user->userService()->find($userId);
 $user->userService()->asUser($userId)->roles()->add('manager');
 $user->userService()->asUser($userId)->roles()->remove('admin');
 $user->userService()->asUser($userId)->roles()->clear();
