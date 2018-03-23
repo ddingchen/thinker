@@ -33,6 +33,16 @@ class UCenterApiFake
         }');
     }
 
+    public function refreshAccessToken()
+    {
+        return json_decode('{
+            "access_token": "new_access_token",
+            "token_type": "Bearer",
+            "expires_in": 7200,
+            "refresh_token": "JsFrLIQfKZ4YVba5qUS2q1UyXE24pJCkO5NC9i3I"
+        }');
+    }
+
     public function getUser()
     {
         return json_decode('{

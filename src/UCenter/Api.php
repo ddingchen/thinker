@@ -99,7 +99,7 @@ class Api
         return $response->data;
     }
 
-    public function refreshAccessToken($accessToken)
+    public function refreshAccessToken($refreshAccessToken)
     {
         $url = $this->root . '/api/oauth/accessToken';
         $response = $this->client->request("POST", $url, [
@@ -107,7 +107,7 @@ class Api
                 'client_id' => $this->client_id,
                 'client_secret' => $this->client_secret,
                 'grant_type' => 'refresh_token',
-                'refresh_token' => $accessToken,
+                'refresh_token' => $refreshAccessToken,
             ],
         ]);
         $response = json_decode($response->getBody());
