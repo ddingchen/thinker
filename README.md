@@ -73,44 +73,51 @@ Route::group(['middleware' => 'ucenter.auth'], function () {
 
 ## TODO LIST
 ```php
-// 前往身份认证
+// 网页授权
 UCenter::webAuth()->redirect();
-
-// 获取当前用户信息
 $user = UCenter::webAuth()->user($code);
+
+// 密码授权
 $user = UCenter::apiAuth()->user($username, $password);
 
-// 可用API接口
-$user->fresh();
+// 可用跳转
+$user->redirect()->toChangeAccount();
+$user->redirect()->toApp($appId, $domainId = null);
+
+// 可用方法
+// current user
+$user->refresh();
 $user->update(['username' => 'chen.d']);
 $user->access_token;
 $user->accessToken();
 $user->accessToken()->refresh();
-$user->apps();
-$user->app()->roles();
-$user->domains();
-$user->domain($domainId)->withPermissions()->roles();
-$user->domain($domainId)->permissions();
-$user->accountChange()->redirect();
-$user->goto($appId, $domainId)->redirect();
 
-// 仅管理员身份可用API接口
-$user->userService()->register($phone, $password, $username);
-$user->userService()->search($phone);
-$user->userService()->searchByName($username);
-$user->userService()->find($userId);
-$user->userService()->asUser($userId)->roles()->add('manager');
-$user->userService()->asUser($userId)->roles()->remove('admin');
-$user->userService()->asUser($userId)->roles()->clear();
-$user->domainService()->search($name);
-$user->domainService()->find($domainId);
-$user->domainService()->create($name, $desc);
-$user->domainService()->asDomain($domainId)->updateDesc("chen's domain");
-$user->domainService()->asDomain($domainId)->apps();
-$user->domainService()->asDomain($domainId)->users();
-$user->domainService()->asDomain($domainId)->roles();
+// all users
+$user->users()->find($userId);
+$user->users()->findByPhone($phone);
+$user->users()->findByName($username);
+$user->users()->listInDomain($domainId);
+$user->users()->register($phone, $password, $username);
 
-// 以某个用户身份调用API接口(以下两种方式效果相同)
-$user->anyApi();
-UCenter::as($user)->anyApi();
+// app
+$user->apps()->list();
+$user->apps()->inDomain($domainId)->list();
+
+// role
+$user->roles()->list(); // current app
+$user->roles()->inDomain($domainId)->list();
+$user->roles()->inDomain($domainId)->withPermissions()->list();
+$user->roles()->forUser($userId)->add('manager'); // forUser is optional, default self
+$user->roles()->forUser($userId)->remove('admin'); // forUser is optional,default self
+$user->roles()->forUser($userId)->clear(); // forUser is optional, default self
+
+// domain
+$user->domains()->list();
+$user->domains()->search($name);
+$user->domains()->find($domainId);
+$user->domains()->create($name, $desc);
+$user->domains()->updateDesc("chen's domain", $forDomainId);
+
+// permission
+$user->permissions()->listInDomain($domainId);
 ```
