@@ -239,5 +239,22 @@ class Api
 
         return $response->data;
     }
+
+    public function getUserById($userId, $accessToken)
+    {
+        $url = $this->root . '/api/users/' . $userId;
+        $response = $this->client->request("GET", $url, [
+            'query' => [
+                'access_token' => $accessToken,
+            ],
+        ]);
+        $response = json_decode($response->getBody());
+
+        if ($response->code !== 0) {
+            throw new UCenterException;
+        }
+
+        return $response->data;
+    }
    
 }
