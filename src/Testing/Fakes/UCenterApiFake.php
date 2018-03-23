@@ -91,4 +91,22 @@ class UCenterApiFake
         }');
     }
 
+    public function getDomains()
+    {
+        $data = json_decode('{
+            "1": {
+              "id": "1",
+              "name": "新格尔软件",
+              "description": "新格尔软件"
+            },
+            "10": {
+              "id": "10",
+              "name": "测试域",
+              "description": "仅测试用"
+            }
+        }', true);
+        $data = array_values($data);
+        return json_decode(json_encode($data));
+    }
+
 }

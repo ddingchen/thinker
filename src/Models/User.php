@@ -2,6 +2,7 @@
 
 namespace Thinker\Models;
 
+use Thinker\DomainService;
 use Thinker\Facades\UCenterApi;
 
 class User
@@ -62,6 +63,11 @@ class User
             $this->$field = $value;
         }
         return $this;
+    }
+
+    public function domains()
+    {
+        return new DomainService($this->access_token);
     }
 
     public function __get($name)

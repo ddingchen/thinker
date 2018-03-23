@@ -163,5 +163,26 @@ class Api
 
         return $response->data;
     }
+
+    public function getDomains($accessToken)
+    {
+        $url = $this->root . '/api/user/domain';
+        $response = $this->client->request("GET", $url, [
+            'query' => [
+                'access_token' => $accessToken,
+            ],
+        ]);
+        $response = json_decode($response->getBody());
+
+        if ($response->code !== 0) {
+            throw new UCenterException;
+        }
+
+        // 转换api接口返回的特殊json格式，清除列表的索引以数组形式返回
+        $data = json_decode(json_encode($response->data), true);
+        $data = json_decode(json_encode(array_values($data)));
+
+        return $data;
+    }
    
 }

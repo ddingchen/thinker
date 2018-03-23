@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use Thinker\DomainService;
 use Thinker\Facades\UCenterApi;
 use Thinker\Models\AccessToken;
 use Thinker\Models\User;
@@ -62,6 +63,11 @@ class UserTest extends TestCase
 
         $this->assertEquals('updated name', $this->user->username);
         $this->assertEquals('updated email', $this->user->email);
+    }
+
+    public function test_it_returns_domain_service()
+    {
+        $this->assertInstanceOf(DomainService::class, $this->user->domains());
     }
 
 }
