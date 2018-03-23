@@ -33,4 +33,9 @@ class DomainService
         return UCenterApi::getDomainById($domainId, $this->accessToken);
     }
 
+    public function create($name, $desc)
+    {
+        return UCenterApi::createDomain($name, $desc, $this->accessToken);
+    }
+
 }

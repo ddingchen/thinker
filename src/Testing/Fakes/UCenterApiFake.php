@@ -174,4 +174,15 @@ class UCenterApiFake
         }');
     }
 
+    public function createDomain()
+    {
+        return json_decode('{
+            "id": "1",
+            "name": "域名称",
+            "description": "域描述",
+            "created_at": "2017-04-01 00:00:00",
+            "updated_at": "2017-04-01 00:00:00"
+        }');
+    }
+
 }

@@ -201,5 +201,24 @@ class Api
 
         return $response->data;
     }
+
+    public function createDomain($name, $desc, $accessToken)
+    {
+        $url = $this->root . '/api/domain';
+        $response = $this->client->request("POST", $url, [
+            'form_params' => [
+                'access_token' => $accessToken,
+                'domain_name' => $name,
+                'description' => $desc,
+            ],
+        ]);
+        $response = json_decode($response->getBody());
+
+        if ($response->code !== 0) {
+            throw new UCenterException;
+        }
+
+        return $response->data;
+    }
    
 }

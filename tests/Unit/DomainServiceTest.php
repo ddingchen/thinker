@@ -43,4 +43,11 @@ class DomainServiceTest extends TestCase
         $this->assertEquals(UCenterApi::getDomainById(), $domain);
     }
 
+    public function test_it_creates_a_domain()
+    {
+        $domain = $this->service->create('name', 'desc');
+
+        $this->assertEquals(UCenterApi::createDomain(), $domain);
+    }
+
 }
