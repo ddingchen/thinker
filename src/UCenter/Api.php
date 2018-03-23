@@ -53,24 +53,13 @@ class Api
      */
     public function getAccessTokenByCode($code)
     {
-        $url = $this->root . '/api/oauth/accessToken';
-        $response = $this->client->request("POST", $url, [
-            'form_params' => [
-                'client_id' => $this->client_id,
-                'client_secret' => $this->client_secret,
-                'grant_type' => 'authorization_code',
-                'redirect_uri' => $this->redirect_uri,
-                'code' => $code,
-            ],
+        return $this->post('/api/oauth/accessToken', [
+            'client_id' => $this->client_id,
+            'client_secret' => $this->client_secret,
+            'grant_type' => 'authorization_code',
+            'redirect_uri' => $this->redirect_uri,
+            'code' => $code,
         ]);
-
-        if ($response->getStatusCode() != 200) {
-            throw new UCenterException;
-        }
-
-        $response = json_decode($response->getBody());
-
-        return $response->data;
     }
 
     /**
@@ -80,43 +69,23 @@ class Api
      */
     public function getAccessTokenByPassword($username, $password)
     {
-        $url = $this->root . '/api/oauth/accessToken';
-        $response = $this->client->request("POST", $url, [
-            'form_params' => [
-                'client_id' => $this->client_id,
-                'client_secret' => $this->client_secret,
-                'grant_type' => 'password',
-                'username' => $username,
-                'password' => $password,
-            ],
+        return $this->post('/api/oauth/accessToken', [
+            'client_id' => $this->client_id,
+            'client_secret' => $this->client_secret,
+            'grant_type' => 'password',
+            'username' => $username,
+            'password' => $password,
         ]);
-        $response = json_decode($response->getBody());
-
-        if ($response->code !== 0) {
-            throw new UCenterException;
-        }
-
-        return $response->data;
     }
 
     public function refreshAccessToken($refreshAccessToken)
     {
-        $url = $this->root . '/api/oauth/accessToken';
-        $response = $this->client->request("POST", $url, [
-            'form_params' => [
-                'client_id' => $this->client_id,
-                'client_secret' => $this->client_secret,
-                'grant_type' => 'refresh_token',
-                'refresh_token' => $refreshAccessToken,
-            ],
+        return $this->post('/api/oauth/accessToken', [
+            'client_id' => $this->client_id,
+            'client_secret' => $this->client_secret,
+            'grant_type' => 'refresh_token',
+            'refresh_token' => $refreshAccessToken,
         ]);
-        $response = json_decode($response->getBody());
-
-        if ($response->code !== 0) {
-            throw new UCenterException;
-        }
-
-        return $response->data;
     }
 
     public function urlOfApplication($appId, $domainId, $accessToken)
@@ -132,104 +101,78 @@ class Api
 
     public function getUser($accessToken)
     {
-        $url = $this->root . '/api/user';
-        $response = $this->client->request("GET", $url, [
-            'query' => [
-                'access_token' => $accessToken,
-            ],
+        return $this->get('/api/user', [
+            'access_token' => $accessToken,
         ]);
-        $response = json_decode($response->getBody());
-
-        if ($response->code !== 0) {
-            throw new UCenterException;
-        }
-
-        return $response->data;
     }
 
     public function updateUser($data, $accessToken)
     {
-        $url = $this->root . '/api/user';
-        $response = $this->client->request("PUT", $url, [
-            'form_params' => array_merge([
-                'access_token' => $accessToken,
-            ], $data),
-        ]);
-        $response = json_decode($response->getBody());
-
-        if ($response->code !== 0) {
-            throw new UCenterException;
-        }
-
-        return $response->data;
+        return $this->put('/api/user', array_merge([
+            'access_token' => $accessToken,
+        ], $data));
     }
 
     public function getDomains($accessToken)
     {
-        $url = $this->root . '/api/user/domain';
-        $response = $this->client->request("GET", $url, [
-            'query' => [
-                'access_token' => $accessToken,
-            ],
+        $data = $this->get('/api/user/domain', [
+            'access_token' => $accessToken,
         ]);
-        $response = json_decode($response->getBody());
 
-        if ($response->code !== 0) {
-            throw new UCenterException;
-        }
-
-        // 转换api接口返回的特殊json格式，清除列表的索引以数组形式返回
-        $data = json_decode(json_encode($response->data), true);
-        $data = json_decode(json_encode(array_values($data)));
-
-        return $data;
+        return $this->clearArrayKeysOfTopLevel($data);
     }
 
     public function getDomainById($domainId, $accessToken)
     {
-        $url = $this->root . '/api/user/domain/' . $domainId;
-        $response = $this->client->request("GET", $url, [
-            'query' => [
-                'access_token' => $accessToken,
-            ],
+        return $this->get('/api/user/domain/' . $domainId, [
+            'access_token' => $accessToken,
         ]);
-        $response = json_decode($response->getBody());
-
-        if ($response->code !== 0) {
-            throw new UCenterException;
-        }
-
-        return $response->data;
     }
 
     public function createDomain($name, $desc, $accessToken)
     {
-        $url = $this->root . '/api/domain';
-        $response = $this->client->request("POST", $url, [
-            'form_params' => [
-                'access_token' => $accessToken,
-                'domain_name' => $name,
-                'description' => $desc,
-            ],
+        return $this->post('/api/domain', [
+            'access_token' => $accessToken,
+            'domain_name' => $name,
+            'description' => $desc,
         ]);
-        $response = json_decode($response->getBody());
-
-        if ($response->code !== 0) {
-            throw new UCenterException;
-        }
-
-        return $response->data;
     }
 
     public function updateDomain($domainId, $desc, $accessToken)
     {
-        $url = $this->root . '/api/domain';
-        $response = $this->client->request("PUT", $url, [
-            'form_params' => [
-                'access_token' => $accessToken,
-                'domain_id' => $domainId,
-                'description' => $desc,
-            ],
+        return $this->put('/api/domain', [
+            'access_token' => $accessToken,
+            'domain_id' => $domainId,
+            'description' => $desc,
+        ]);
+    }
+
+    public function getUserById($userId, $accessToken)
+    {
+        return $this->get('/api/users/' . $userId, [
+            'access_token' => $accessToken,
+        ]);
+    }
+
+    protected function get($url, $data)
+    {
+        return $this->request('get', $url, $data);
+    }
+
+    public function post($url, $data)
+    {
+        return $this->request('post', $url, $data);
+    }
+
+    public function put($url, $data)
+    {
+        return $this->request('put', $url, $data);
+    }
+
+    protected function request($method, $url, $data)
+    {
+        $response = $this->client->request($method, $url, [
+            $this->optionNameForMethod($method) => $data,
         ]);
         $response = json_decode($response->getBody());
 
@@ -240,21 +183,27 @@ class Api
         return $response->data;
     }
 
-    public function getUserById($userId, $accessToken)
+    protected function optionNameForMethod($method)
     {
-        $url = $this->root . '/api/users/' . $userId;
-        $response = $this->client->request("GET", $url, [
-            'query' => [
-                'access_token' => $accessToken,
-            ],
-        ]);
-        $response = json_decode($response->getBody());
+        $method = strtolower($method);
 
-        if ($response->code !== 0) {
-            throw new UCenterException;
+        if ($method == 'get') {
+            return 'query';
         }
 
-        return $response->data;
+        return 'form_params';
+    }
+
+    protected function clearArrayKeysOfTopLevel($data)
+    {
+        // 转换为索引数组
+        $data = json_decode(json_encode($data), true);
+
+        // 去除索引
+        $data = array_values($data);
+
+        // 转换为Object
+        return json_decode(json_encode($data));
     }
    
 }
