@@ -7,19 +7,32 @@ use Thinker\DomainService;
 use Thinker\Facades\UCenterApi;
 
 /**
-* DomainServiceTest
-*/
+ * DomainServiceTest
+ */
 class DomainServiceTest extends TestCase
 {
-    
+
+    private $service;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        UCenterApi::fake();
+        $this->service = new DomainService('token');
+    }
+
     public function test_it_returns_all_domains_associated_with_current_app()
     {
-        UCenterApi::fake();
+        $domains = $this->service->list();
 
-        $service = new DomainService('token');
+        $this->assertCount(2, $domains);
+    }
 
-        $domains = $service->list();
-        
+    public function test_it_returns_domains_named_with_keywords()
+    {
+        $domains = $this->service->search('keyword');
+
         $this->assertCount(2, $domains);
     }
 

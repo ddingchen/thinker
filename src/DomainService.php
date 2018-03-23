@@ -23,4 +23,9 @@ class DomainService
         return $domains;
     }
 
+    public function search($keyword)
+    {
+        return UCenterApi::searchDomains($keyword, $this->accessToken);
+    }
+
 }
