@@ -38,4 +38,11 @@ class DomainService
         return UCenterApi::createDomain($name, $desc, $this->accessToken);
     }
 
+    public function updateDesc($desc, $forDomainId)
+    {
+        return UCenterApi::updateDomain([
+            'description' => $desc,
+        ], $forDomainId, $this->accessToken);
+    }
+
 }

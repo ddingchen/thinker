@@ -93,7 +93,7 @@ $user->domains()->list();
 $user->domains()->search($name);
 $user->domains()->find($domainId);
 $user->domains()->create($name, $desc);
-$user->domains()->updateDesc("chen's domain", $forDomainId);
+$user->domains()->updateDesc($forDomainId, "chen's domain");
 
 // permission
 $user->permissions()->listInDomain($domainId);
