@@ -89,11 +89,11 @@ $user->roles()->forUser($userId)->remove('admin'); // forUser is optional,defaul
 $user->roles()->forUser($userId)->clear(); // forUser is optional, default self
 
 // domain
-$user->domains()->list();
-$user->domains()->search($name);
-$user->domains()->find($domainId);
-$user->domains()->create($name, $desc);
-$user->domains()->updateDesc($forDomainId, "chen's domain");
+// done $user->domains()->list();
+// done $user->domains()->search($name);
+// done $user->domains()->find($domainId);
+// done $user->domains()->create($name, $desc);
+// done $user->domains()->updateDesc($forDomainId, "chen's domain");
 
 // permission
 $user->permissions()->listInDomain($domainId);
