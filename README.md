@@ -3,8 +3,6 @@
 ## 功能
 
 - UCenter接口封装
-- 网页授权中间件
-- 便捷获取当前用户相关信息
 
 ## 安装
 
@@ -50,35 +48,14 @@ UCENTER_CLIENT_SECRET=6145e8e3deee8ca83e40870002d86f96
 UCENTER_REDIRECT_URI=http://laravel-54.test/ucenter/login
 ```
 
-## 使用
-
-+ 网页授权中间件
-在App\Http\Kernel.php中，添加对应中间件的定义
-```php
-    protected $routeMiddleware = [
-        // ...
-        'ucenter.auth' => \Thinker\Middleware\OAuth::class,
-    ];
-```
-
-+ 在routes/web.php路由定义中使用中间件
-```php
-Route::group(['middleware' => 'ucenter.auth'], function () {
-    Route::get('ucenter/login'); 
-    // 必须，用于接收授权回调，地址应与授权参数redirect_uri指向的地址一致
-    
-    // 其他需要验证的路由定义
-});
-```
-
 ## TODO LIST
 ```php
 // 网页授权
-UCenter::webAuth()->redirect();
-$user = UCenter::webAuth()->user($code);
+// done UCenter::webAuth()->redirect();
+// done $user = UCenter::webAuth()->user($code);
 
 // 密码授权
-$user = UCenter::apiAuth()->user($username, $password);
+// done $user = UCenter::apiAuth()->user($username, $password);
 
 // 可用跳转
 $user->redirect()->toChangeAccount();
@@ -86,11 +63,11 @@ $user->redirect()->toApp($appId, $domainId = null);
 
 // 可用方法
 // current user
-$user->refresh();
-$user->update(['username' => 'chen.d']);
-$user->access_token;
-$user->accessToken();
-$user->accessToken()->refresh();
+// done $user->refresh();
+// done $user->update(['username' => 'chen.d']);
+// done $user->access_token;
+// done $user->accessToken();
+// done $user->accessToken()->refresh();
 
 // all users
 $user->users()->find($userId);
