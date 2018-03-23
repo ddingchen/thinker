@@ -146,5 +146,22 @@ class Api
 
         return $response->data;
     }
+
+    public function updateUser($data, $accessToken)
+    {
+        $url = $this->root . '/api/user';
+        $response = $this->client->request("PUT", $url, [
+            'form_params' => array_merge([
+                'access_token' => $accessToken,
+            ], $data),
+        ]);
+        $response = json_decode($response->getBody());
+
+        if ($response->code !== 0) {
+            throw new UCenterException;
+        }
+
+        return $response->data;
+    }
    
 }
