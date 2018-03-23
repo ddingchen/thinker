@@ -154,6 +154,38 @@ class Api
         ]);
     }
 
+    public function getUserByInfo($info, $accessToken)
+    {
+        $data = ['access_token' => $accessToken];
+
+        if (isset($info['username'])) {
+            $data['username'] = $info['username'];
+        }
+
+        if (isset($info['phone'])) {
+            $data['phone'] = $info['phone'];
+        }
+
+        return $this->get('/api/users', $data);
+    }
+
+    public function getUserInDomain($domainId, $accessToken)
+    {
+        return $this->get('/api/domains/' . $domainId . '/users', [
+            'access_token' => $accessToken,
+        ]);
+    }
+
+    public function registerUser($phone, $password, $username = null, $accessToken)
+    {
+        return $this->post('/api/user', [
+            'access_token' => $accessToken,
+            'phone' => $phone,
+            'password' => $password,
+            'username' => $username,
+        ]);
+    }
+
     protected function get($url, $data)
     {
         return $this->request('get', $url, $data);

@@ -223,9 +223,77 @@ class UCenterApiFake
                 "sex": {
                     "title": "性别",
                     "value": ""
-                },
-                ...
+                }
             }
+        }');
+    }
+
+    public function getUserByInfo()
+    {
+        return json_decode('{
+            "user_id": 1002,
+            "username": "",
+            "email": "",
+            "phone": "",
+            "details": {
+                "position": {
+                    "title": "职位",
+                    "value": ""
+                },
+                "address": {
+                    "title": "地址",
+                    "value": ""
+                },
+                "department": {
+                    "title": "部门",
+                    "value": ""
+                },
+                "school": {
+                    "title": "学校",
+                    "value": ""
+                },
+                "sex": {
+                    "title": "性别",
+                    "value": ""
+                }
+            }
+        }');
+    }
+
+    public function getUsersInDomain()
+    {
+        $data = json_decode('{
+            "domain": {
+                  "id": "1",
+                  "name": "新格尔软件",
+                  "description": "新格尔软件"
+            },    
+            "users": {
+                "1001": {    
+                    "user_id": 1001,
+                    "username": "",
+                    "email": "",
+                    "phone": "",
+                    "details": {
+                        "realname": {
+                            "title": "姓名",
+                            "value": ""
+                        }
+                    }
+                }
+            }
+        }');
+
+        return $data->users;
+    }
+
+    public function registerUser()
+    {
+        return json_decode('{
+            "user_id": 1002,
+            "username": "188888888",
+            "phone": "188888888",
+            "created_at": "2017-04-01 12:12:12"
         }');
     }
 

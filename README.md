@@ -70,11 +70,12 @@ $user->redirect()->toApp($appId, $domainId = null);
 // done $user->accessToken()->refresh();
 
 // all users
-$user->users()->find($userId);
-$user->users()->findByPhone($phone);
-$user->users()->findByName($username);
-$user->users()->listInDomain($domainId);
-$user->users()->register($phone, $password, $username);
+// done $user->users()->find($userId);
+// done $user->users()->findByName($username);
+// done $user->users()->findByPhone($phone);
+// done $user->users()->findByNameAndPhone($username, $phone);
+// done $user->users()->listInDomain($domainId);
+// done $user->users()->register($phone, $password, $username);
 
 // app
 $user->apps()->list();
