@@ -28,4 +28,9 @@ class DomainService
         return UCenterApi::searchDomains($keyword, $this->accessToken);
     }
 
+    public function find($domainId)
+    {
+        return UCenterApi::getDomainById($domainId, $this->accessToken);
+    }
+
 }

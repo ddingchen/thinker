@@ -184,5 +184,22 @@ class Api
 
         return $data;
     }
+
+    public function getDomainById($domainId, $accessToken)
+    {
+        $url = $this->root . '/api/user/domain/' . $domainId;
+        $response = $this->client->request("GET", $url, [
+            'query' => [
+                'access_token' => $accessToken,
+            ],
+        ]);
+        $response = json_decode($response->getBody());
+
+        if ($response->code !== 0) {
+            throw new UCenterException;
+        }
+
+        return $response->data;
+    }
    
 }
