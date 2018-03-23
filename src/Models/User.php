@@ -2,6 +2,7 @@
 
 namespace Thinker\Models;
 
+use Thinker\AppService;
 use Thinker\DomainService;
 use Thinker\Facades\UCenterApi;
 
@@ -68,6 +69,11 @@ class User
     public function domains()
     {
         return new DomainService($this->access_token);
+    }
+
+    public function apps()
+    {
+        return new AppService($this->access_token);
     }
 
     public function __get($name)

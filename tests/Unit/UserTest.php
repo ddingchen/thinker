@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use Thinker\AppService;
 use Thinker\DomainService;
 use Thinker\Facades\UCenterApi;
 use Thinker\Models\AccessToken;
@@ -70,6 +71,11 @@ class UserTest extends TestCase
     public function test_it_returns_domain_service()
     {
         $this->assertInstanceOf(DomainService::class, $this->user->domains());
+    }
+
+    public function test_it_returns_app_service()
+    {
+        $this->assertInstanceOf(AppService::class, $this->user->apps());
     }
 
 }

@@ -78,8 +78,8 @@ $user->redirect()->toApp($appId, $domainId = null);
 // done $user->users()->register($phone, $password, $username);
 
 // app
-$user->apps()->list();
-$user->apps()->inDomain($domainId)->list();
+// done $user->apps()->listInDomain($domainId);
+// done $user->apps()->selfRelated()->listInDomain($domainId);
 
 // role
 $user->roles()->list(); // current app

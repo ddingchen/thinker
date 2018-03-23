@@ -186,6 +186,21 @@ class Api
         ]);
     }
 
+    public function getAppsInDomain($domainId, $accessToken)
+    {
+        return $this->get('/api/domains/' . $domainId . '/apps', [
+            'access_token' => $accessToken,
+        ]);
+    }
+
+    public function getMyAppsInDomain($domainId, $accessToken)
+    {
+        return $this->get('/api/user/app', [
+            'access_token' => $accessToken,
+            'domain_id' => $domainId,
+        ]);
+    }
+
     protected function get($url, $data)
     {
         return $this->request('get', $url, $data);
