@@ -2,10 +2,7 @@
 
 namespace Thinker\Models;
 
-use Tests\TestCase;
-
-
-class AccessToken extends TestCase
+class AccessToken
 {
     
     public $access_token;
