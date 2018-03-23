@@ -13,7 +13,7 @@ class UCenterApiFake
         return 'url_of_authorize_page';
     }
 
-    public function getAccessTokenByCode($code)
+    public function getAccessTokenByCode()
     {
         return json_decode('{
             "access_token": "JQrKik8HTWaW2G2Aq2QKh9hYGK0Ntfv4Tc42rpJA",
@@ -23,7 +23,7 @@ class UCenterApiFake
         }');
     }
 
-    public function getAccessTokenByPassword($username, $password)
+    public function getAccessTokenByPassword()
     {
         return json_decode('{
             "access_token": "JQrKik8HTWaW2G2Aq2QKh9hYGK0Ntfv4Tc42rpJA",

@@ -26,14 +26,14 @@ class DomainServiceTest extends TestCase
     {
         $domains = $this->service->list();
 
-        $this->assertCount(2, $domains);
+        $this->assertEquals(UCenterApi::getDomains(), $domains);
     }
 
     public function test_it_returns_domains_named_with_keywords()
     {
         $domains = $this->service->search('keyword');
 
-        $this->assertCount(2, $domains);
+        $this->assertEquals(UCenterApi::searchDomains(), $domains);
     }
 
 }

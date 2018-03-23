@@ -34,13 +34,15 @@ class WebAuthTest extends TestCase
     public function test_it_returns_user_info_if_authorized_code_is_valid()
     {
         UCenterApi::fake();
+        $userData = UCenterApi::getUser();
+        $accessTokenData = UCenterApi::getAccessTokenByCode('123456');
 
         $user = $this->webAuth->user($authorizedCode = '123456');
 
         $this->assertInstanceOf(User::class, $user);
-        $this->assertEquals(123, $user->id);
+        $this->assertEquals($userData->user_id, $user->id);
         $this->assertInstanceOf(AccessToken::class, $user->accessToken());
-        $this->assertEquals('JQrKik8HTWaW2G2Aq2QKh9hYGK0Ntfv4Tc42rpJA', $user->access_token);
+        $this->assertEquals($accessTokenData->access_token, $user->access_token);
     }
 
 }

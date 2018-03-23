@@ -46,23 +46,25 @@ class UserTest extends TestCase
     public function test_it_may_reload_users_profile()
     {
         UCenterApi::fake();
+        $userData = UCenterApi::getUser();
 
         $this->user->fresh();
 
-        $this->assertEquals('fake name', $this->user->username);
+        $this->assertEquals($userData->username, $this->user->username);
     }
 
     public function test_it_may_update_props()
     {
         UCenterApi::fake();
+        $userData = UCenterApi::updateUser();
         
         $this->user->update([
             'username' => 'updated name',
             'email' => 'updated email',
         ]);
 
-        $this->assertEquals('updated name', $this->user->username);
-        $this->assertEquals('updated email', $this->user->email);
+        $this->assertEquals($userData->username, $this->user->username);
+        $this->assertEquals($userData->email, $this->user->email);
     }
 
     public function test_it_returns_domain_service()
