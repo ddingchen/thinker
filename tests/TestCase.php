@@ -45,6 +45,28 @@ class TestCase extends TestbenchTest
         ];
     }
 
+    protected function mockApiDemo($action, $responseType = 'ok')
+    {
+        $source = require("tests/ApiResponseDemo/{$action}.php");
+
+        $demo = $source[$responseType];
+        $stream = Psr7\stream_for($demo['json']);
+        $response = new Response($demo['status'], [], $stream);
+        $mock = new MockHandler([
+            $response,
+        ]);
+        $handler = HandlerStack::create($mock);
+
+        $client = new Client([
+            'handler' => $handler,
+            'http_errors' => false,
+        ]);
+
+        $this->app->singleton(Client::class, function ($app) use ($client) {
+            return $client;
+        });
+    }
+
     protected function mockHttpClient($result, $statusCode = 200)
     {
         $stream = Psr7\stream_for($result);

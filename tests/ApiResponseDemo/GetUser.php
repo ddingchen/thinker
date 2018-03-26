@@ -1,17 +1,10 @@
-<?php 
+<?php
 
-namespace Tests\Unit\Api;
+return [
 
-use Tests\TestCase;
-use Thinker\Facades\UCenterApi;
-
-
-class UserTest extends TestCase
-{
-    
-    public function test_it_returns_user_info()
-    {
-        $this->mockHttpClient('{
+    'ok' => [
+        'status' => 200,
+        'json' => '{
             "code": 0,
             "message": "获取用户信息成功",
             "data": {
@@ -34,11 +27,7 @@ class UserTest extends TestCase
                     }
                 }
             }
-        }');
-
-        $result = UCenterApi::getUser('IsFrLIQfKZ4YVba5qUS2q1UyXE24pJCkO5NC9i3I');
-
-        $this->assertEquals("1002", $result->user_id);
-    }
-
-}
+        }',
+    ],
+    
+];
