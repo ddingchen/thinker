@@ -64,4 +64,11 @@ class UserServiceTest extends TestCase
          $this->assertEquals(UCenterApi::registerUser(), $user);
     }
 
+    public function test_it_deletes_user_in_a_domain()
+    {
+         $result = $this->service->deleteInDomain(1, 1);
+
+         $this->assertEquals(UCenterApi::clearRolesForUser(), $result);
+    }
+
 }

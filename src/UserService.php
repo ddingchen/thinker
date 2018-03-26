@@ -54,4 +54,9 @@ class UserService
         return UCenterApi::registerUser($phone, $password, $username, $this->accessToken);
     }
 
+    public function deleteInDomain($userId, $domainId)
+    {
+        return UCenterApi::clearRolesForUser($userId, $domainId);
+    }
+
 }

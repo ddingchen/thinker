@@ -76,6 +76,7 @@ $user->redirect()->toApp($appId, $domainId = null);
 // done $user->users()->findByNameAndPhone($username, $phone);
 // done $user->users()->listInDomain($domainId);
 // done $user->users()->register($phone, $password, $username);
+$user->users()->deleteInDomain($userId, $domainId = null);
 
 // app
 // done $user->apps()->listInDomain($domainId);
@@ -84,10 +85,11 @@ $user->redirect()->toApp($appId, $domainId = null);
 // role
 $user->roles()->list(); // current app
 $user->roles()->inDomain($domainId)->list();
-$user->roles()->inDomain($domainId)->withPermissions()->list();
-$user->roles()->forUser($userId)->add('manager'); // forUser is optional, default self
-$user->roles()->forUser($userId)->remove('admin'); // forUser is optional,default self
-$user->roles()->forUser($userId)->clear(); // forUser is optional, default self
+$user->roles()->selfRelated()->inDomain($domainId)->list();
+$user->roles()->selfRelated()->inDomain($domainId)->withPermissions()->list();
+$user->roles()->forUser($userId)->inDomain($domainId)->add('manager');
+$user->roles()->forUser($userId)->inDomain($domainId)->remove('admin');
+$user->roles()->forUser($userId)->inDomain($domainId)->clear();
 
 // domain
 // done $user->domains()->list();

@@ -5,6 +5,7 @@ namespace Thinker\Models;
 use Thinker\AppService;
 use Thinker\DomainService;
 use Thinker\Facades\UCenterApi;
+use Thinker\RoleService;
 
 class User
 {
@@ -74,6 +75,11 @@ class User
     public function apps()
     {
         return new AppService($this->access_token);
+    }
+
+    public function roles()
+    {
+        return new RoleService($this->access_token);
     }
 
     public function __get($name)

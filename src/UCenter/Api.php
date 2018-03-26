@@ -201,6 +201,65 @@ class Api
         ]);
     }
 
+    public function getRolesInCurrentApp($accessToken)
+    {
+        return $this->get('/api/app/roles', [
+            'access_token' => $accessToken,
+        ]);
+    }
+
+    public function getRolesInDomain($domainId, $accessToken)
+    {
+        return $this->get('/api/domains/' . $domainId . '/roles', [
+            'access_token' => $accessToken,
+        ]);
+    }
+
+    public function getMyRolesInDomain($domainId = null, $accessToken)
+    {
+        return $this->get('/api/user/role', [
+            'access_token' => $accessToken,
+            'domain_id' => $domainId,
+        ]);
+    }
+
+    public function getMyRolesWithPermissionsInDomain($domainId = null, $accessToken)
+    {
+        return $this->get('/api/user/rolePermission', [
+            'access_token' => $accessToken,
+            'domain_id' => $domainId,
+        ]);
+    }
+
+    public function addRoleForUser($userId, $role, $domainId = null, $accessToken)
+    {
+        return $this->post('/api/user/role', [
+            'access_token' => $accessToken,
+            'user_id' => $userId,
+            'role_name' => $role,
+            'domain_id' => $domainId,
+        ]);
+    }
+
+    public function removeRoleForUser($userId, $role, $domainId = null, $accessToken)
+    {
+        return $this->delete('/api/user/role', [
+            'access_token' => $accessToken,
+            'user_id' => $userId,
+            'role_name' => $role,
+            'domain_id' => $domainId,
+        ]);
+    }
+
+    public function clearRolesForUser($userId, $domainId = null, $accessToken)
+    {
+        return $this->delete('/api/user', [
+            'access_token' => $accessToken,
+            'user_id' => $userId,
+            'domain_id' => $domainId,
+        ]);
+    }
+
     protected function get($url, $data)
     {
         return $this->request('get', $url, $data);
@@ -214,6 +273,11 @@ class Api
     public function put($url, $data)
     {
         return $this->request('put', $url, $data);
+    }
+
+    public function delete($url, $data)
+    {
+        return $this->request('delete', $url, $data);
     }
 
     protected function request($method, $url, $data)

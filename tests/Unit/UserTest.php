@@ -8,6 +8,7 @@ use Thinker\DomainService;
 use Thinker\Facades\UCenterApi;
 use Thinker\Models\AccessToken;
 use Thinker\Models\User;
+use Thinker\RoleService;
 
 class UserTest extends TestCase
 {
@@ -76,6 +77,11 @@ class UserTest extends TestCase
     public function test_it_returns_app_service()
     {
         $this->assertInstanceOf(AppService::class, $this->user->apps());
+    }
+
+    public function test_it_returns_role_service()
+    {
+        $this->assertInstanceOf(RoleService::class, $this->user->roles());
     }
 
 }

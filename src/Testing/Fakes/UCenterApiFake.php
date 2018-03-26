@@ -333,4 +333,144 @@ class UCenterApiFake
         }');
     }
 
+    public function getRolesInCurrentApp()
+    {
+        return json_decode('[
+            {
+                "id": "14",
+                "app_id": "5",
+                "name": "guest",
+                "title": "访客",
+                "description": "访客",
+                "created_at": "2017-04-11 00:47:48",
+                "updated_at": "2017-04-11 00:47:48",
+                "perms": []
+            },
+            {
+                "id": "19",
+                "app_id": "5",
+                "name": "customer",
+                "title": "经销商",
+                "description": "经销商",
+                "created_at": "2017-04-11 14:10:16",
+                "updated_at": "2017-04-11 14:10:16",
+                "perms": []
+            }
+        ]');
+    }
+
+    public function getRolesInDomain()
+    {
+        return json_decode('{
+            "domain": {
+                  "id": "1",
+                  "name": "新格尔软件",
+                  "description": "新格尔软件"
+            },    
+            "roles": {
+                "10": {     
+                    "id": 10,
+                    "name": "role name",
+                    "title": "角色名称",
+                    "permission_ids": [],
+                    "users": {
+                        "1001": {
+                            "user_id": "1001",
+                            "username": "用户名",
+                            "email": "",
+                            "phone": "",
+                            "details": {
+                                "realname": {
+                                    "title": "姓名",
+                                    "value": ""
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }');
+    }
+
+    public function getMyRolesInDomain()
+    {
+        return json_decode('{
+              "domain": {
+                  "id": "1",
+                  "name": "新格尔软件"
+            },  
+            "user_id": 1000,
+            "roles": [
+                {
+                    "id": 2,
+                    "name": "common",
+                    "title": "普通用户"
+                }
+            ]
+        }');
+    }
+
+    public function getMyRolesWithPermissionsInDomain()
+    {
+        return json_decode('{
+            "domain": {
+                  "id": "1",
+                  "name": "新格尔软件"
+            },    
+            "user_id": 1000,
+            "roles": [
+                {
+                    "id": 2,
+                    "name": "admin",
+                    "title": "管理员",
+                    "permissions": [
+                        {
+                            "id": 39,
+                            "name": "create-permission",
+                            "title": "创建权限"
+                        },
+                        {
+                            "id": 38,
+                            "name": "create-app",
+                            "title": "创建应用"
+                        },
+                        {
+                            "id": 37,
+                            "name": "delete-user",
+                            "title": "删除用户"
+                        }
+                    ]
+                }
+            ]
+        }');
+    }
+
+    public function addRoleForUser()
+    {
+        return json_decode('{
+            "domain_id": "1",
+            "user_id": 1002,
+            "roles": [
+                "guest"
+            ]
+        }');
+    }
+
+    public function removeRoleForUser()
+    {
+        return json_decode('{
+            "domain_id": "13",
+            "user_id": 1038,
+            "role_name": "guest"
+        }');
+    }
+
+    public function clearRolesForUser()
+    {
+        return json_decode('{
+            "domain_id": "13",
+            "user_id": "1038"
+        }');
+    }
+
 }
