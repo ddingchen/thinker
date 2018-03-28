@@ -60,7 +60,7 @@ class User
 
     public function update($data)
     {
-        $user = UCenterApi::updateUser($this->access_token, $data);
+        $user = UCenterApi::updateUser($data, $this->access_token);
         foreach ($user as $field => $value) {
             $this->$field = $value;
         }

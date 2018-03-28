@@ -63,17 +63,17 @@ class RoleService
 
     public function add($role)
     {
-        return UCenterApi::addRoleForUser($this->userId, $role, $this->domainId);
+        return UCenterApi::addRoleForUser($this->userId, $role, $this->domainId, $this->accessToken);
     }
 
     public function remove($role)
     {
-        return UCenterApi::removeRoleForUser($this->userId, $role, $this->domainId);
+        return UCenterApi::removeRoleForUser($this->userId, $role, $this->domainId, $this->accessToken);
     }
 
     public function clear()
     {
-        return UCenterApi::clearRolesForUser($this->userId, $this->domainId);
+        return UCenterApi::clearRolesForUser($this->userId, $this->domainId, $this->accessToken);
     }
 
 }

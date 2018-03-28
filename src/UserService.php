@@ -56,7 +56,7 @@ class UserService
 
     public function deleteInDomain($userId, $domainId)
     {
-        return UCenterApi::clearRolesForUser($userId, $domainId);
+        return UCenterApi::clearRolesForUser($userId, $domainId, $this->accessToken);
     }
 
 }

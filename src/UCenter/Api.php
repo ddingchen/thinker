@@ -122,6 +122,16 @@ class Api
         return $this->clearArrayKeysOfTopLevel($data);
     }
 
+    public function searchDomains($keyword, $accessToken)
+    {
+        $data = $this->get('/api/domains', [
+            'access_token' => $accessToken,
+            'name' => $keyword,
+        ]);
+
+        return $this->clearArrayKeysOfTopLevel($data);
+    }
+
     public function getDomainById($domainId, $accessToken)
     {
         return $this->get('/api/user/domain/' . $domainId, [
@@ -169,11 +179,13 @@ class Api
         return $this->get('/api/users', $data);
     }
 
-    public function getUserInDomain($domainId, $accessToken)
+    public function getUsersInDomain($domainId, $accessToken)
     {
-        return $this->get('/api/domains/' . $domainId . '/users', [
+        $data = $this->get('/api/domains/' . $domainId . '/users', [
             'access_token' => $accessToken,
         ]);
+
+        return $this->clearArrayKeysOfTopLevel($data->users);
     }
 
     public function registerUser($phone, $password, $username = null, $accessToken)
@@ -214,35 +226,43 @@ class Api
 
     public function getRolesInDomain($domainId, $accessToken)
     {
-        return $this->get('/api/domains/' . $domainId . '/roles', [
+        $data = $this->get('/api/domains/' . $domainId . '/roles', [
             'access_token' => $accessToken,
         ]);
+
+        return $this->clearArrayKeysOfTopLevel($data->roles);
     }
 
     public function getMyRolesInDomain($domainId = null, $accessToken)
     {
-        return $this->get('/api/user/role', [
+        $data = $this->get('/api/user/role', [
             'access_token' => $accessToken,
             'domain_id' => $domainId,
         ]);
+
+        return $this->clearArrayKeysOfTopLevel($data->roles);
     }
 
     public function getMyRolesWithPermissionsInDomain($domainId = null, $accessToken)
     {
-        return $this->get('/api/user/rolePermission', [
+        $data = $this->get('/api/user/rolePermission', [
             'access_token' => $accessToken,
             'domain_id' => $domainId,
         ]);
+
+        return $this->clearArrayKeysOfTopLevel($data->roles);
     }
 
     public function addRoleForUser($userId, $role, $domainId = null, $accessToken)
     {
-        return $this->post('/api/user/role', [
+        $data = $this->post('/api/user/role', [
             'access_token' => $accessToken,
             'user_id' => $userId,
             'role_name' => $role,
             'domain_id' => $domainId,
         ]);
+
+        return $data->roles;
     }
 
     public function removeRoleForUser($userId, $role, $domainId = null, $accessToken)

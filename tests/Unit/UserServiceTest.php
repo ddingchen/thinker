@@ -18,57 +18,92 @@ class UserServiceTest extends TestCase
     {
         parent::setUp();
 
-        UCenterApi::fake();
+        $this->fake = UCenterApi::fake();
         $this->service = new UserService('token');    
     }
 
     public function test_it_returns_a_user()
     {
-        $user = $this->service->find(1);
+        $this->fake->action('getUserById')
+            ->using(["user_id" => 123])
+            ->push();
 
-        $this->assertEquals(UCenterApi::getUserById(), $user);
+        $result = $this->service->find(1);
+
+        $this->assertEquals(123, $result->user_id);
     }
 
     public function test_it_finds_a_user_by_username()
     {
-        $user = $this->service->findByName('name');
+        $this->fake->action('getUserByInfo')
+            ->using(["user_id" => 123])
+            ->push();
 
-        $this->assertEquals(UCenterApi::getUserByInfo(), $user);
+        $result = $this->service->findByName('name');
+
+        $this->assertEquals(123, $result->user_id);
     }
 
     public function test_it_finds_a_user_by_phone()
     {
-        $user = $this->service->findByPhone('12345678901');
+        $this->fake->action('getUserByInfo')
+            ->using(["user_id" => 123])
+            ->push();
 
-        $this->assertEquals(UCenterApi::getUserByInfo(), $user);
+        $result = $this->service->findByPhone('12345678901');
+
+        $this->assertEquals(123, $result->user_id);
     }
 
     public function test_it_finds_a_user_by_username_and_phone()
     {
-        $user = $this->service->findByNameAndPhone('name', '12345678901');
+        $this->fake->action('getUserByInfo')
+            ->using(["user_id" => 123])
+            ->push();
 
-        $this->assertEquals(UCenterApi::getUserByInfo(), $user);
+        $result = $this->service->findByNameAndPhone('name', '12345678901');
+
+        $this->assertEquals(123, $result->user_id);
     }
 
     public function test_it_lists_users_in_a_domain()
     {
+        $this->fake->action('getUsersInDomain')
+            ->using(["users" => [
+                "1001" => [
+                    "user_id" => 1001,
+                    "username" => "",
+                    "email" => "",
+                    "phone" => "",
+                    "details" => [
+                        "realname" => [
+                            "title" => "姓名",
+                            "value" => ""
+                        ]
+                    ]
+                ]
+            ]])
+            ->push();
+
         $users = $this->service->listInDomain(1);
 
-        $this->assertEquals(UCenterApi::getUsersInDomain(), $users);
+        $this->assertCount(1, $users);
     }
 
     public function test_it_register_a_new_user()
     {
+        $this->fake->action('registerUser')
+            ->using(["user_id" => 123])
+            ->push();
+
          $user = $this->service->register('12345678901', '123456', 'name');
 
-         $this->assertEquals(UCenterApi::registerUser(), $user);
+         $this->assertEquals(123, $user->user_id);
     }
 
     public function test_it_deletes_user_in_a_domain()
     {
-         $result = $this->service->deleteInDomain(1, 1);
-
-         $this->assertEquals(UCenterApi::clearRolesForUser(), $result);
+         $this->service->deleteInDomain(1, 1);
     }
 
 }
