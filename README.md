@@ -49,7 +49,7 @@ UCENTER_REDIRECT_URI=http://laravel-54.test/ucenter/login
 ```
 
 ## 使用
-+ 网页授权代码示例
+网页授权代码示例
 在```{project}/app/Http/Middleware```中添加如下中间件
 ```diff
 + use Closure;
