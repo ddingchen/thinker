@@ -29,7 +29,7 @@ $ composer update ddingchen/thinker
 ```
 
 2. 添加下述代码至```{project}/config/app.php```
-```
+```diff
      'providers' => [
 +        Thinker\Providers\UCenterServiceProvider::class,
      ]
