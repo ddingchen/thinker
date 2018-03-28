@@ -25,7 +25,10 @@ class AccessTokenTest extends TestCase
 
     public function test_it_refresh_by_refresh_token()
     {
-        UCenterApi::fake();
+        $fake = UCenterApi::fake();
+        $fake->action('refreshAccessToken')
+            ->using(['access_token' => 'new_access_token'])
+            ->push();
 
         $this->accessToken->refresh();
 

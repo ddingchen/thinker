@@ -35,6 +35,7 @@ class TestCase extends TestbenchTest
             'Illuminate\Foundation\Auth\User'
         );
         $app['config']->set('ucenter', []);
+        $app['config']->set('app.log', 'single');
     }
 
     protected function getPackageProviders($app)
@@ -45,44 +46,17 @@ class TestCase extends TestbenchTest
         ];
     }
 
-    protected function mockApiDemo($action, $responseType = 'ok')
+    protected function mockApiDemo($action, $case = 'ok', $customData = [])
     {
-        $source = require("tests/ApiResponseDemo/{$action}.php");
-
-        $demo = $source[$responseType];
-        $stream = Psr7\stream_for($demo['json']);
-        $response = new Response($demo['status'], [], $stream);
-        $mock = new MockHandler([
-            $response,
-        ]);
-        $handler = HandlerStack::create($mock);
-
-        $client = new Client([
-            'handler' => $handler,
-            'http_errors' => false,
-        ]);
-
-        $this->app->singleton(Client::class, function ($app) use ($client) {
-            return $client;
+        $this->app->singleton(Client::class, function ($app) use ($action, $case, $customData) {
+            return makeApiDemoClient($action, $case, $customData);
         });
     }
 
     protected function mockHttpClient($result, $statusCode = 200)
     {
-        $stream = Psr7\stream_for($result);
-        $response = new Response($statusCode, [], $stream);
-        $mock = new MockHandler([
-            $response,
-        ]);
-        $handler = HandlerStack::create($mock);
-
-        $client = new Client([
-            'handler' => $handler,
-            'http_errors' => false,
-        ]);
-
-        $this->app->singleton(Client::class, function ($app) use ($client) {
-            return $client;
+        $this->app->singleton(Client::class, function ($app) {
+            return makeHttpClient($result, $statusCode);
         });
     }
 

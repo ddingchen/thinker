@@ -2,6 +2,7 @@
 
 namespace Thinker\Facades;
 
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Facade;
 use Thinker\Testing\Fakes\UCenterApiFake;
 use Thinker\UCenter\Api as Origin;
@@ -16,7 +17,9 @@ class UCenterApi extends Facade
      */
     public static function fake()
     {
-        static::swap($fake = new UCenterApiFake);
+        $fake = new UCenterApiFake(app(Client::class));
+        
+        static::swap($fake);
 
         return $fake;
     }

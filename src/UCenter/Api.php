@@ -188,17 +188,21 @@ class Api
 
     public function getAppsInDomain($domainId, $accessToken)
     {
-        return $this->get('/api/domains/' . $domainId . '/apps', [
+        $data = $this->get('/api/domains/' . $domainId . '/apps', [
             'access_token' => $accessToken,
         ]);
+
+        return $this->clearArrayKeysOfTopLevel($data->apps);
     }
 
     public function getMyAppsInDomain($domainId, $accessToken)
     {
-        return $this->get('/api/user/app', [
+        $data = $this->get('/api/user/app', [
             'access_token' => $accessToken,
             'domain_id' => $domainId,
         ]);
+
+        return $this->clearArrayKeysOfTopLevel($data);
     }
 
     public function getRolesInCurrentApp($accessToken)
@@ -285,8 +289,8 @@ class Api
         $response = $this->client->request($method, $url, [
             $this->optionNameForMethod($method) => $data,
         ]);
-        $response = json_decode($response->getBody());
 
+        $response = json_decode($response->getBody());
         if ($response->code !== 0) {
             throw new UCenterException;
         }
