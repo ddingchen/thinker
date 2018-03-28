@@ -50,4 +50,4 @@ UCENTER_REDIRECT_URI=http://laravel-54.test/ucenter/login
 
 ## 使用
 
-参考[Wiki](https://github.com/ddingchen/thinker/wiki)
+完整文档参考[Wiki](https://github.com/ddingchen/thinker/wiki)
