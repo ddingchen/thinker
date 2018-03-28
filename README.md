@@ -35,7 +35,7 @@ $ composer update ddingchen/thinker
      ]
 ```
 
-3. 项目目录下执行下述命令部署配置文件（```{project}/config/ucenter.php```）
+3. 项目目录下执行下述命令部署配置文件 ```{project}/config/ucenter.php```
 ```
 $ artisan vendor:publish --provider=UCenterServiceProvider
 ```
