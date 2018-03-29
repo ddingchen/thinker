@@ -37,7 +37,7 @@ $ composer update ddingchen/thinker
 
 3. 项目目录下执行下述命令部署配置文件 ```{project}/config/ucenter.php```
 ```
-$ artisan vendor:publish --provider=UCenterServiceProvider
+$ artisan vendor:publish --provider="Thinker\Providers\UCenterServiceProvider"
 ```
 
 4. （可选）在.env文件中覆盖默认配置
