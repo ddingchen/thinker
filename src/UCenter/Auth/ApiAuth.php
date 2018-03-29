@@ -1,9 +1,10 @@
 <?php
 
-namespace Thinker\UCenter;
+namespace Thinker\UCenter\Auth;
 
 use Thinker\Facades\UCenterApi;
 use Thinker\Models\AccessToken;
+use Thinker\UCenter\Auth\Auth;
 
 class ApiAuth extends Auth
 {

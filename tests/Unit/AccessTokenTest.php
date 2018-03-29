@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Thinker\Facades\UCenterApi;
 use Thinker\Models\AccessToken;
+use Thinker\Testing\UCenterApiFake;
 
 class AccessTokenTest extends TestCase
 {

@@ -1,23 +1,16 @@
 <?php
 
-namespace Thinker;
+namespace Thinker\UCenter\Service;
 
 use Thinker\Facades\UCenterApi;
 
 /**
  * AppService
  */
-class AppService
+class AppService extends Service
 {
 
-    private $accessToken;
-
     private $selfRelated = false;
-
-    public function __construct($accessToken)
-    {
-        $this->accessToken = $accessToken;
-    }
 
     public function listInDomain($domainId)
     {

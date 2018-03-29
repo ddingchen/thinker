@@ -4,7 +4,7 @@ namespace Thinker\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Thinker\UCenter;
-use Thinker\UCenter\Api;
+use Thinker\UCenterApi;
 
 class UCenterServiceProvider extends ServiceProvider
 {
@@ -27,8 +27,8 @@ class UCenterServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Api::class, function ($app) {
-            $api = new Api(app('GuzzleHttp\Client'));
+        $this->app->singleton(UCenterApi::class, function ($app) {
+            $api = new UCenterApi(app('GuzzleHttp\Client'));
             $api->loadConfig(config('ucenter'));
             return $api;
         });

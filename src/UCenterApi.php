@@ -1,15 +1,14 @@
-<?php 
+<?php
 
-namespace Thinker\UCenter;
+namespace Thinker;
 
 use GuzzleHttp\Client;
 use Thinker\Exceptions\UCenterException;
+use Thinker\Util\HttpClient;
 
 
-class Api
+class UCenterApi extends HttpClient
 {
-
-    public $client;
 
     public $root;
 
@@ -18,11 +17,6 @@ class Api
     public $client_secret;
 
     public $redirect_uri;
-
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
 
     public function loadConfig($configurations)
     {
@@ -45,7 +39,7 @@ class Api
             $this->redirect_uri
         );
     }
-    
+
     /**
      * Authorize by code mode
      *
@@ -284,61 +278,4 @@ class Api
         ]);
     }
 
-    protected function get($url, $data)
-    {
-        return $this->request('get', $url, $data);
-    }
-
-    public function post($url, $data)
-    {
-        return $this->request('post', $url, $data);
-    }
-
-    public function put($url, $data)
-    {
-        return $this->request('put', $url, $data);
-    }
-
-    public function delete($url, $data)
-    {
-        return $this->request('delete', $url, $data);
-    }
-
-    protected function request($method, $url, $data)
-    {
-        $response = $this->client->request($method, $this->root . $url, [
-            $this->optionNameForMethod($method) => $data,
-        ]);
-
-        $response = json_decode($response->getBody());
-        if ($response->code !== 0) {
-            throw new UCenterException;
-        }
-
-        return $response->data;
-    }
-
-    protected function optionNameForMethod($method)
-    {
-        $method = strtolower($method);
-
-        if ($method == 'get') {
-            return 'query';
-        }
-
-        return 'form_params';
-    }
-
-    protected function clearArrayKeysOfTopLevel($data)
-    {
-        // 转换为索引数组
-        $data = json_decode(json_encode($data), true);
-
-        // 去除索引
-        $data = array_values($data);
-
-        // 转换为Object
-        return json_decode(json_encode($data));
-    }
-   
 }

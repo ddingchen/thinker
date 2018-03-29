@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Thinker\Facades\UCenterApi;
-use Thinker\UserService;
+use Thinker\UCenter\Service\UserService;
 
 /**
 * UserServiceTest

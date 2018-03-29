@@ -7,10 +7,10 @@ use Thinker\Facades\UCenterApi;
 
 class GetAccessTokenByCodeTest extends TestCase
 {
-    
+
     public function test_it_returns_ok()
     {
-        $this->mockApiDemo('GetAccessTokenByCode', 'ok');
+        UCenterApi::fake();
 
         $result = UCenterApi::getAccessTokenByCode($code = 123456);
 

@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Thinker\DomainService;
+use Thinker\UCenter\Service\DomainService;
 use Thinker\Facades\UCenterApi;
 
 /**

@@ -1,10 +1,11 @@
 <?php
 
-namespace Thinker\UCenter;
+namespace Thinker\UCenter\Auth;
 
 use Thinker\Facades\UCenter;
 use Thinker\Facades\UCenterApi;
 use Thinker\Models\AccessToken;
+use Thinker\UCenter\Auth\Auth;
 
 class WebAuth extends Auth
 {

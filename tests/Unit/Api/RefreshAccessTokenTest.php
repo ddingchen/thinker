@@ -10,7 +10,7 @@ class RefreshAccessTokenTest extends TestCase
     
     public function test_it_returns_ok()
     {
-        $this->mockApiDemo('RefreshAccessToken', 'ok');
+        UCenterApi::fake();
 
         $result = UCenterApi::refreshAccessToken($code = 123456);
 

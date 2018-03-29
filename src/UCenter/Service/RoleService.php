@@ -1,24 +1,17 @@
 <?php
 
-namespace Thinker;
+namespace Thinker\UCenter\Service;
 
 use Thinker\Facades\UCenterApi;
 
-class RoleService
+class RoleService extends Service
 {
-
-    private $accessToken;
 
     private $domainId;
 
     private $selfRelated = false;
 
     private $withPermissions = false;
-
-    public function __construct($accessToken)
-    {
-        $this->accessToken = $accessToken;
-    }
 
     public function list()
     {

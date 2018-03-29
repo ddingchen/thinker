@@ -1,21 +1,14 @@
 <?php
 
-namespace Thinker;
+namespace Thinker\UCenter\Service;
 
 use Thinker\Facades\UCenterApi;
 
 /**
-* UserService
-*/
-class UserService
+ * UserService
+ */
+class UserService extends Service
 {
-
-    private $accessToken;
-    
-    function __construct($accessToken)
-    {
-        $this->accessToken = $accessToken;
-    }
 
     public function find($userId)
     {

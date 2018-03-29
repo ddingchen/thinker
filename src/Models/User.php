@@ -2,10 +2,10 @@
 
 namespace Thinker\Models;
 
-use Thinker\AppService;
-use Thinker\DomainService;
+use Thinker\UCenter\Service\AppService;
+use Thinker\UCenter\Service\DomainService;
 use Thinker\Facades\UCenterApi;
-use Thinker\RoleService;
+use Thinker\UCenter\Service\RoleService;
 
 class User
 {

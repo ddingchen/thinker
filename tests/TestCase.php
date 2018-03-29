@@ -31,7 +31,7 @@ class TestCase extends TestbenchTest
             'prefix' => '',
         ]);
         $app['config']->set(
-            'auth.providers.users.model', 
+            'auth.providers.users.model',
             'Illuminate\Foundation\Auth\User'
         );
         $app['config']->set('ucenter', []);
@@ -45,29 +45,19 @@ class TestCase extends TestbenchTest
         ];
     }
 
-    protected function mockApiDemo($action, $case = 'ok', $customData = [])
-    {
-        $this->app->singleton(Client::class, function ($app) use ($action, $case, $customData) {
-            return makeApiDemoClient($action, $case, $customData);
-        });
-    }
-
-    protected function mockHttpClient($result, $statusCode = 200)
-    {
-        $this->app->singleton(Client::class, function ($app) {
-            return makeHttpClient($result, $statusCode);
-        });
-    }
-
     protected function disableExceptionHandling()
     {
         $this->oldExceptionHandler = $this->app->make(ExceptionHandler::class);
         $this->app->instance(ExceptionHandler::class, new class extends Handler
         {
             public function __construct()
-            {}
+            {
+            }
+
             public function report(\Exception $e)
-            {}
+            {
+            }
+
             public function render($request, \Exception $e)
             {
                 throw $e;

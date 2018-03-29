@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Thinker\UCenter\Api;
+use Thinker\UCenterApi;
 
 
 class ConfigLoadTest extends TestCase
@@ -23,7 +23,7 @@ class ConfigLoadTest extends TestCase
     {
         $this->assertEquals(
             "http://api.com",
-            app(Api::class)->root
+            app(UCenterApi::class)->root
         );
     }
 

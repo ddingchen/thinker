@@ -3,12 +3,12 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Thinker\AppService;
-use Thinker\DomainService;
+use Thinker\UCenter\Service\AppService;
+use Thinker\UCenter\Service\DomainService;
 use Thinker\Facades\UCenterApi;
 use Thinker\Models\AccessToken;
 use Thinker\Models\User;
-use Thinker\RoleService;
+use Thinker\UCenter\Service\RoleService;
 
 class UserTest extends TestCase
 {

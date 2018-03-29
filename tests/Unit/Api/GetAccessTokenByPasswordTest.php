@@ -11,7 +11,7 @@ class GetAccessTokenByPasswordTest extends TestCase
     
     public function test_it_returns_ok()
     {
-        $this->mockApiDemo('GetAccessTokenByPassword', 'ok');
+        UCenterApi::fake();
 
         $result = UCenterApi::GetAccessTokenByPassword('dc', '123');
 
@@ -20,7 +20,9 @@ class GetAccessTokenByPasswordTest extends TestCase
 
     public function test_it_returns_credentials_incorrect()
     {
-        $this->mockApiDemo('GetAccessTokenByPassword', 'credentials_incorrect');
+        $fake = UCenterApi::fake();
+        $fake->action('GetAccessTokenByPassword')
+            ->expect('credentials_incorrect')->push();
 
         $this->expectException(UCenterException::class);
 

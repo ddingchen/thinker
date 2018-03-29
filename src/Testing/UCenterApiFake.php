@@ -1,11 +1,12 @@
 <?php
 
-namespace Thinker\Testing\Fakes;
+namespace Thinker\Testing;
 
 use GuzzleHttp\Client;
-use Thinker\UCenter\Api;
+use Thinker\UCenterApi;
+use Thinker\Util\HttpClient;
 
-class UCenterApiFake
+class UCenterApiFake extends HttpClient
 {
 
     protected $action;
@@ -74,7 +75,7 @@ class UCenterApiFake
         }
 
         // mock Http Client
-        $client = makeApiDemoClient(
+        $client = $this->makeApiDemoClient(
             $demoName,
             $case,
             $data,
@@ -82,7 +83,7 @@ class UCenterApiFake
         );
 
         // call real action
-        return (new Api($client))->$action(...$arguments);
+        return (new UCenterApi($client))->$action(...$arguments);
     }
 
 }

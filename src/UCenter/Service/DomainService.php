@@ -1,21 +1,14 @@
 <?php
 
-namespace Thinker;
+namespace Thinker\UCenter\Service;
 
 use Thinker\Facades\UCenterApi;
 
 /**
 * DomainService
 */
-class DomainService
+class DomainService extends Service
 {
-
-    private $accessToken;
-    
-    function __construct($accessToken)
-    {
-        $this->accessToken = $accessToken;
-    }
 
     public function list()
     {

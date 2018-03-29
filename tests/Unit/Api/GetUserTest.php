@@ -11,7 +11,7 @@ class GetUserTest extends TestCase
     
     public function test_it_returns_ok()
     {
-        $this->mockApiDemo('GetUser', 'ok');
+        UCenterApi::fake();
 
         $result = UCenterApi::getUser($accessToken = 'IsFrLIQfKZ4YVba5qUS2q1UyXE24pJCkO5NC9i3I');
 

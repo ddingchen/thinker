@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Thinker\AppService;
+use Thinker\UCenter\Service\AppService;
 use Thinker\Facades\UCenterApi;
 
 class AppServiceTest extends TestCase
