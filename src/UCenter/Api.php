@@ -306,7 +306,7 @@ class Api
 
     protected function request($method, $url, $data)
     {
-        $response = $this->client->request($method, $url, [
+        $response = $this->client->request($method, $this->root . $url, [
             $this->optionNameForMethod($method) => $data,
         ]);
 
