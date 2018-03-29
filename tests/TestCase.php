@@ -42,7 +42,6 @@ class TestCase extends TestbenchTest
     {
         return [
             'Thinker\Providers\UCenterServiceProvider',
-            'Orchestra\Database\ConsoleServiceProvider',
         ];
     }
 
