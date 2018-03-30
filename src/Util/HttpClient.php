@@ -45,12 +45,17 @@ class HttpClient
             $this->optionNameForMethod($method) => $data,
         ]);
 
-        $response = json_decode($response->getBody());
-        if ($response->code !== 0) {
-            throw new UCenterException();
+        $body = json_decode($response->getBody());
+        if ($body->code !== 0) {
+            throw new UCenterException(
+                $response->getStatusCode(), 
+                $body->code, 
+                $body->message, 
+                $body->data
+            );
         }
 
-        return $response->data;
+        return $body->data;
     }
 
     protected function optionNameForMethod($method)
