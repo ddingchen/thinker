@@ -83,7 +83,7 @@ class HttpClient
 
     public function makeApiDemoClient($action, $case = 'ok', $customData = [], $replace = false)
     {
-        $demos = require "tests/ApiResponseDemo/{$action}.php";
+        $demos = require __DIR__ . "/../../tests/ApiResponseDemo/{$action}.php";
         $demo = $demos[$case];
 
         // merge demo json with custom data
