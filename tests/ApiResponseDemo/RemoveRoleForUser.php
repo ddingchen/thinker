@@ -14,5 +14,16 @@ return [
             }
         }',
     ],
+
+    'role_invalid' => [
+        'status' => 404,
+        'json' => '{
+            "code": 404,
+            "message": "指定用户角色不存在",
+            "data": {
+                "role_name": "manager"
+            }
+        }',
+    ],
     
 ];
