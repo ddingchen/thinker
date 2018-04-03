@@ -48,5 +48,16 @@ return [
             }
         }',
     ],
+
+    'none' => [
+        'status' => 404,
+        'json' => '{
+            "code": 404,
+            "message": "域不存在",
+            "data": {
+                "domain_id": "11"
+            }
+        }',
+    ],
     
 ];
