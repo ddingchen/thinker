@@ -43,6 +43,7 @@ class HttpClient
     {
         $response = $this->client->request($method, $this->root . $url, [
             $this->optionNameForMethod($method) => $data,
+            'http_errors' => false,
         ]);
 
         $body = json_decode($response->getBody());
