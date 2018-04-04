@@ -231,9 +231,14 @@ class UCenterApi extends HttpClient
 
     public function getRolesInCurrentApp($accessToken)
     {
-        return $this->get('/api/app/roles', [
+        $data = $this->get('/api/app/roles', [
             'access_token' => $accessToken,
         ]);
+
+        // admin、developer角色不可用于应用环境下设置
+        return array_filter($data, function ($item) {
+            return !in_array($item->name, ['admin', 'developer']);
+        });
     }
 
     public function getRolesInDomain($domainId, $accessToken)
