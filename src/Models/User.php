@@ -2,10 +2,11 @@
 
 namespace Thinker\Models;
 
+use Thinker\Facades\UCenterApi;
 use Thinker\UCenter\Service\AppService;
 use Thinker\UCenter\Service\DomainService;
-use Thinker\Facades\UCenterApi;
 use Thinker\UCenter\Service\RoleService;
+use Thinker\UCenter\Service\UserService;
 
 class User
 {
@@ -65,6 +66,11 @@ class User
             $this->$field = $value;
         }
         return $this;
+    }
+
+    public function users()
+    {
+        return new UserService($this->access_token);
     }
 
     public function domains()
