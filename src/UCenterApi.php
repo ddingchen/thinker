@@ -137,7 +137,7 @@ class UCenterApi extends HttpClient
     public function getDomainById($domainId, $accessToken)
     {
         try {
-            $data = $this->get('/api/user/domain/' . $domainId, [
+            $data = $this->get('/api/user/domains/' . $domainId, [
                 'access_token' => $accessToken,
             ]);
         } catch (UCenterException $exception) {
