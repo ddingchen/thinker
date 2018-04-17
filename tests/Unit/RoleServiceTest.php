@@ -36,7 +36,7 @@ class RoleServiceTest extends TestCase
             ], true)
             ->push();
 
-        $roles = $this->service->list();
+        $roles = $this->service->listAll();
 
         $this->assertCount(1, $roles);
     }
@@ -60,7 +60,7 @@ class RoleServiceTest extends TestCase
             ], true)
             ->push();
 
-        $roles = $this->service->inDomain(1)->list();
+        $roles = $this->service->inDomain(1)->listAll();
 
         $this->assertCount(1, $roles);
     }
@@ -79,7 +79,7 @@ class RoleServiceTest extends TestCase
             ])
             ->push();
 
-        $roles = $this->service->selfRelated()->inDomain(1)->list();
+        $roles = $this->service->selfRelated()->inDomain(1)->listAll();
 
         $this->assertCount(1, $roles);
     }
@@ -110,7 +110,7 @@ class RoleServiceTest extends TestCase
             ])
             ->push();
 
-        $roles = $this->service->selfRelated()->withPermissions()->inDomain(1)->list();
+        $roles = $this->service->selfRelated()->withPermissions()->inDomain(1)->listAll();
 
         $this->assertCount(1, $roles);
         $this->assertCount(2, $roles[0]->permissions);

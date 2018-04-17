@@ -33,7 +33,7 @@ class DomainServiceTest extends TestCase
                 ]
             ], true)->push();
 
-        $domains = $this->service->list();
+        $domains = $this->service->listAll();
 
         $this->assertCount(1, $domains);
     }

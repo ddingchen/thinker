@@ -10,7 +10,7 @@ use Thinker\Facades\UCenterApi;
 class DomainService extends Service
 {
 
-    public function list()
+    public function listAll()
     {
         $domains = UCenterApi::getDomains($this->accessToken);
         return $domains;

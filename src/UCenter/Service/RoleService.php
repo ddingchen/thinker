@@ -13,7 +13,7 @@ class RoleService extends Service
 
     private $withPermissions = false;
 
-    public function list()
+    public function listAll()
     {
         if ($this->selfRelated) {
             if ($this->withPermissions) {
