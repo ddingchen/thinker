@@ -52,4 +52,14 @@ class UserService extends Service
         return UCenterApi::clearRolesForUser($userId, $domainId, $this->accessToken);
     }
 
+    public function resetPassword()
+    {
+        return $this;
+    }
+
+    public function redirect()
+    {
+        return redirect(UCenterApi::urlOfResetPasswordPage());
+    }
+
 }

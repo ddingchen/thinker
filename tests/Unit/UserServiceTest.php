@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Foundation\Testing\TestResponse;
 use Tests\TestCase;
 use Thinker\Facades\UCenterApi;
 use Thinker\UCenter\Service\UserService;
@@ -104,6 +105,14 @@ class UserServiceTest extends TestCase
     public function test_it_deletes_user_in_a_domain()
     {
          $this->service->deleteInDomain(1, 1);
+    }
+
+    public function test_it_returns_password_reset_url()
+    {
+        $response = $this->service->resetPassword()->redirect();
+
+         TestResponse::fromBaseResponse($response)
+            ->assertRedirect(UCenterApi::urlOfResetPasswordPage());
     }
 
 }

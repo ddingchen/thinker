@@ -41,6 +41,21 @@ class UCenterApi extends HttpClient
     }
 
     /**
+     * Url of reset password page
+     *
+     * @return mixed
+     */
+    public function urlOfResetPasswordPage()
+    {
+        return sprintf(
+            '%s/password/phone?client_id=%s&redirect_uri=%s&response_type=code',
+            $this->root,
+            $this->client_id,
+            $this->redirect_uri
+        );
+    }
+
+    /**
      * Authorize by code mode
      *
      * @return mixed

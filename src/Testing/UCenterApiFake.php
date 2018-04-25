@@ -60,6 +60,11 @@ class UCenterApiFake extends HttpClient
 
     public function __call($action, $arguments)
     {
+        // 无需HTTP请求的action则直接调用
+        if (strpos($action, 'url') !== false) {
+            return (new UCenterApi(new Client))->$action(...$arguments);
+        }
+
         // 默认提取Demo中的“ok”Case作为返回
         $demoName = ucfirst($action);
         $case = 'ok';
