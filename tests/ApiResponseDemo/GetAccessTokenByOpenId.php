@@ -15,5 +15,14 @@ return [
             }
         }',
     ],
+
+    'openid_invalid' => [
+        'status' => 200,
+        'json' => '{
+            "code": 1,
+            "message": "当前微信未绑定账户",
+            "data": {}
+        }',
+    ],
     
 ];
