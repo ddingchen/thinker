@@ -5,6 +5,7 @@ namespace Thinker;
 use Thinker\UCenter\Auth\ApiAuth;
 use Thinker\UCenter\Auth\PasswordReset;
 use Thinker\UCenter\Auth\WebAuth;
+use Thinker\UCenter\Auth\WechatAuth;
 
 class UCenter
 {
@@ -17,6 +18,11 @@ class UCenter
     public function apiAuth()
     {
         return new ApiAuth;
+    }
+
+    public function wechatAuth()
+    {
+        return new WechatAuth;
     }
 
     public function passwordReset()

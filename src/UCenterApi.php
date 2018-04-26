@@ -87,6 +87,14 @@ class UCenterApi extends HttpClient
         ]);
     }
 
+    public function getAccessTokenByOpenId($openId, $adminAccessToken)
+    {
+        return $this->post('/api/wechat/accessToken', [
+            'access_token' => $adminAccessToken,
+            'openid' => $openId,
+        ]);
+    }
+
     public function refreshAccessToken($refreshAccessToken)
     {
         return $this->post('/api/oauth/accessToken', [
