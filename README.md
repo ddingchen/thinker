@@ -42,8 +42,8 @@ $ artisan vendor:publish --provider="Thinker\Providers\UCenterServiceProvider"
 
 4. （可选）在.env文件中覆盖默认配置
 ```
-#UCENTER_ROOT=http://ucenter.test.thinkerx.com
-UCENTER_CLIENT_ID=UC5ab1cd9841261
-UCENTER_CLIENT_SECRET=6145e8e3deee8ca83e40870002d86f96
+#UCENTER_ROOT=http://my.ucenter.domain
+UCENTER_CLIENT_ID=YOUR_CLIENT_ID
+UCENTER_CLIENT_SECRET=YOUR_CLIENT_SECRET
 UCENTER_REDIRECT_URI=http://laravel-54.test/ucenter/login
 ```
