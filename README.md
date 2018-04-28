@@ -42,73 +42,8 @@ $ artisan vendor:publish --provider="Thinker\Providers\UCenterServiceProvider"
 
 4. （可选）在.env文件中覆盖默认配置
 ```
-#UCENTER_ROOT=http://ucenter.test.thinkerx.com
-UCENTER_CLIENT_ID=UC5ab1cd9841261
-UCENTER_CLIENT_SECRET=6145e8e3deee8ca83e40870002d86f96
+#UCENTER_ROOT=http://my.ucenter.domain
+UCENTER_CLIENT_ID=YOUR_CLIENT_ID
+UCENTER_CLIENT_SECRET=YOUR_CLIENT_SECRET
 UCENTER_REDIRECT_URI=http://laravel-54.test/ucenter/login
 ```
-
-## 使用
-网页授权代码示例
-在```{project}/app/Http/Middleware```中添加如下中间件
-```diff
-+ use Closure;
-+ use Thinker\Facades\UCenter;
-+ 
-+ class UCenterWebAuth
-+ {
-+ 
-+     public function handle($request, Closure $next)
-+     {
-+         if (session('ucenter.user')) {
-+             return $next($request);
-+         }
-+ 
-+         return UCenter::webAuth()->redirect();
-+     }
-+     
-+ }
-```
-在```{project}/app/Http/Kernel.php```中注册该中间件
-```diff
-use Illuminate\Foundation\Http\Kernel as HttpKernel;
-
-class Kernel extends HttpKernel
-{
-
-    protected $routeMiddleware = [
-+        'ucenter.auth' => Middleware\UCenterWebAuth::class,
-    ];
-    
-}
-```
-在```{project}/app/Http/Controllers```中添加下述控制器
-```diff
-+ use Thinker\Facades\UCenter;
-+ 
-+ class UCenterController extends Controller
-+ {
-+     
-+     public function callback()
-+     {
-+         $user = UCenter::webAuth()->user(request('code'));
-+ 
-+         session()->put('ucenter.user', $user);
-+     }
-+ 
-+ }
-```
-在```{project}/routes/web.php```中注册路由地址
-```diff
-+ // 监听授权回调
-+ Route::get('ucenter/login', 'UCenterController@callback');
-
-+ // 业务路由
-+ Route::group(['middleware' => 'ucenter.auth'], function () {
-+     Route::get('/', function () {
-+         $user = session('ucenter.user');
-+     });
-+ });
-```
-
-完整文档参考[Wiki](https://github.com/ddingchen/thinker/wiki)
