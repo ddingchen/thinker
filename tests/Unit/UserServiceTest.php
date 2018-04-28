@@ -106,4 +106,15 @@ class UserServiceTest extends TestCase
         $this->service->deleteInDomain(1, 1);
     }
 
+    public function test_it_bind_wechat_to_user_account()
+    {
+        $this->fake->action('bindWechat')
+            ->using(['user_id' => 123])
+            ->push();
+
+        $response = $this->service->bindWechat('123456');
+
+        $this->assertEquals(123, $response->user_id);
+    }
+
 }

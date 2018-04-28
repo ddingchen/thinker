@@ -10,6 +10,11 @@ use Thinker\Facades\UCenterApi;
 class UserService extends Service
 {
 
+    public function bindWechat($openId)
+    {
+        return UCenterApi::bindWechat($openId, $this->accessToken);
+    }
+
     public function find($userId)
     {
         return UCenterApi::getUserById($userId, $this->accessToken);

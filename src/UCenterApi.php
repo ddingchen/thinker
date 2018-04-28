@@ -87,6 +87,19 @@ class UCenterApi extends HttpClient
         ]);
     }
 
+    /**
+     * Bind wechat to user account
+     *
+     * @return mixed
+     */
+    public function bindWechat($openId, $accessToken)
+    {
+        return $this->post('/api/user/wechat', [
+            'access_token' => $accessToken,
+            'openid' => $openId,
+        ]);
+    }
+
     public function getAccessTokenByOpenId($openId, $adminAccessToken)
     {
         return $this->post('/api/wechat/accessToken', [
