@@ -2,10 +2,8 @@
 
 namespace Thinker;
 
-use GuzzleHttp\Client;
 use Thinker\Exceptions\UCenterException;
 use Thinker\Util\HttpClient;
-
 
 class UCenterApi extends HttpClient
 {

@@ -7,8 +7,8 @@ use Thinker\Facades\UCenterApi;
 use Thinker\UCenter\Service\UserService;
 
 /**
-* UserServiceTest
-*/
+ * UserServiceTest
+ */
 class UserServiceTest extends TestCase
 {
 
@@ -19,7 +19,7 @@ class UserServiceTest extends TestCase
         parent::setUp();
 
         $this->fake = UCenterApi::fake();
-        $this->service = new UserService('token');    
+        $this->service = new UserService('token');
     }
 
     public function test_it_returns_a_user()
@@ -78,10 +78,10 @@ class UserServiceTest extends TestCase
                     "details" => [
                         "realname" => [
                             "title" => "姓名",
-                            "value" => ""
-                        ]
-                    ]
-                ]
+                            "value" => "",
+                        ],
+                    ],
+                ],
             ]])
             ->push();
 
@@ -96,9 +96,9 @@ class UserServiceTest extends TestCase
             ->using(["user_id" => 123])
             ->push();
 
-         $user = $this->service->register('12345678901', '123456', 'name');
+        $user = $this->service->register('12345678901', '123456', 'name');
 
-         $this->assertEquals(123, $user->user_id);
+        $this->assertEquals(123, $user->user_id);
     }
 
     public function test_it_deletes_user_in_a_domain()
