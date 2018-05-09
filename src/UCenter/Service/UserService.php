@@ -15,6 +15,11 @@ class UserService extends Service
         return UCenterApi::bindWechat($openId, $this->accessToken);
     }
 
+    public function unbindWechat($openId)
+    {
+        return UCenterApi::unbindWechat($openId, $this->accessToken);
+    }
+
     public function find($userId)
     {
         return UCenterApi::getUserById($userId, $this->accessToken);

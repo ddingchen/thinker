@@ -98,6 +98,19 @@ class UCenterApi extends HttpClient
         ]);
     }
 
+    /**
+     * Unbind wechat to user account
+     *
+     * @return mixed
+     */
+    public function unbindWechat($openId, $accessToken)
+    {
+        return $this->delete('/api/user/wechat', [
+            'access_token' => $accessToken,
+            'openid' => $openId,
+        ]);
+    }
+
     public function getAccessTokenByOpenId($openId, $adminAccessToken)
     {
         return $this->post('/api/wechat/accessToken', [

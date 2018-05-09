@@ -117,4 +117,15 @@ class UserServiceTest extends TestCase
         $this->assertEquals(123, $response->user_id);
     }
 
+    public function test_it_unbind_wechat_from_user_account()
+    {
+        $this->fake->action('unbindWechat')
+            ->using(['user_id' => 123])
+            ->push();
+
+        $response = $this->service->unbindWechat('123456');
+
+        $this->assertEquals(123, $response->user_id);
+    }
+
 }
