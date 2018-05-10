@@ -90,7 +90,7 @@ class UCenterApi extends HttpClient
      *
      * @return mixed
      */
-    public function bindWechat($openId, $accessToken)
+    public function bindWechat($accessToken, $openId)
     {
         return $this->post('/api/user/wechat', [
             'access_token' => $accessToken,
@@ -103,7 +103,7 @@ class UCenterApi extends HttpClient
      *
      * @return mixed
      */
-    public function unbindWechat($openId, $accessToken)
+    public function unbindWechat($accessToken, $openId)
     {
         return $this->delete('/api/user/wechat', [
             'access_token' => $accessToken,
@@ -129,7 +129,7 @@ class UCenterApi extends HttpClient
         ]);
     }
 
-    public function urlOfApplication($appId, $domainId, $accessToken)
+    public function urlOfApplication($accessToken, $appId, $domainId)
     {
         return sprintf(
             '%s/api/sso/redirect?access_token=%s&app_id=%s&domain_id=%s',
@@ -147,7 +147,7 @@ class UCenterApi extends HttpClient
         ]);
     }
 
-    public function updateUser($data, $accessToken)
+    public function updateUser($accessToken, $data)
     {
         return $this->put('/api/user', array_merge([
             'access_token' => $accessToken,
@@ -171,7 +171,7 @@ class UCenterApi extends HttpClient
         return $this->clearArrayKeysOfTopLevel($data);
     }
 
-    public function searchDomains($keyword, $accessToken)
+    public function searchDomains($accessToken, $keyword)
     {
         $data = $this->get('/api/domains', [
             'access_token' => $accessToken,
@@ -181,7 +181,7 @@ class UCenterApi extends HttpClient
         return $this->clearArrayKeysOfTopLevel($data);
     }
 
-    public function getDomainById($domainId, $accessToken)
+    public function getDomainById($accessToken, $domainId)
     {
         try {
             $data = $this->get('/api/domains/' . $domainId, [
@@ -198,7 +198,7 @@ class UCenterApi extends HttpClient
         return $data;
     }
 
-    public function createDomain($name, $desc, $accessToken)
+    public function createDomain($accessToken, $name, $desc)
     {
         return $this->post('/api/domain', [
             'access_token' => $accessToken,
@@ -207,7 +207,7 @@ class UCenterApi extends HttpClient
         ]);
     }
 
-    public function updateDomain($domainId, $desc, $accessToken)
+    public function updateDomain($accessToken, $domainId, $desc)
     {
         return $this->put('/api/domain', [
             'access_token' => $accessToken,
@@ -216,14 +216,14 @@ class UCenterApi extends HttpClient
         ]);
     }
 
-    public function getUserById($userId, $accessToken)
+    public function getUserById($accessToken, $userId)
     {
         return $this->get('/api/users/' . $userId, [
             'access_token' => $accessToken,
         ]);
     }
 
-    public function getUserByInfo($info, $accessToken)
+    public function getUserByInfo($accessToken, $info)
     {
         $data = ['access_token' => $accessToken];
 
@@ -238,7 +238,7 @@ class UCenterApi extends HttpClient
         return $this->get('/api/users', $data);
     }
 
-    public function getUsersInDomain($domainId, $accessToken)
+    public function getUsersInDomain($accessToken, $domainId)
     {
         $data = $this->get('/api/domains/' . $domainId . '/users', [
             'access_token' => $accessToken,
@@ -247,7 +247,7 @@ class UCenterApi extends HttpClient
         return $this->clearArrayKeysOfTopLevel($data->users);
     }
 
-    public function registerUser($phone, $password, $username = null, $accessToken)
+    public function registerUser($accessToken, $phone, $password, $username = null)
     {
         return $this->post('/api/user', [
             'access_token' => $accessToken,
@@ -257,7 +257,7 @@ class UCenterApi extends HttpClient
         ]);
     }
 
-    public function getAppsInDomain($domainId, $accessToken)
+    public function getAppsInDomain($accessToken, $domainId)
     {
         $data = $this->get('/api/domains/' . $domainId . '/apps', [
             'access_token' => $accessToken,
@@ -266,7 +266,7 @@ class UCenterApi extends HttpClient
         return $this->clearArrayKeysOfTopLevel($data->apps);
     }
 
-    public function getMyAppsInDomain($domainId, $accessToken)
+    public function getMyAppsInDomain($accessToken, $domainId)
     {
         $data = $this->get('/api/user/app', [
             'access_token' => $accessToken,
@@ -288,7 +288,7 @@ class UCenterApi extends HttpClient
         });
     }
 
-    public function getRolesInDomain($domainId, $accessToken)
+    public function getRolesInDomain($accessToken, $domainId)
     {
         $data = $this->get('/api/domains/' . $domainId . '/roles', [
             'access_token' => $accessToken,
@@ -297,7 +297,7 @@ class UCenterApi extends HttpClient
         return $this->clearArrayKeysOfTopLevel($data->roles);
     }
 
-    public function getMyRolesInDomain($domainId = null, $accessToken)
+    public function getMyRolesInDomain($accessToken, $domainId = null)
     {
         $data = $this->get('/api/user/role', [
             'access_token' => $accessToken,
@@ -307,7 +307,7 @@ class UCenterApi extends HttpClient
         return $this->clearArrayKeysOfTopLevel($data->roles);
     }
 
-    public function getMyRolesWithPermissionsInDomain($domainId = null, $accessToken)
+    public function getMyRolesWithPermissionsInDomain($accessToken, $domainId = null)
     {
         $data = $this->get('/api/user/rolePermission', [
             'access_token' => $accessToken,
@@ -317,7 +317,7 @@ class UCenterApi extends HttpClient
         return $this->clearArrayKeysOfTopLevel($data->roles);
     }
 
-    public function addRoleForUser($userId, $role, $domainId = null, $accessToken)
+    public function addRoleForUser($accessToken, $userId, $role, $domainId = null)
     {
         $data = $this->post('/api/user/role', [
             'access_token' => $accessToken,
@@ -329,7 +329,7 @@ class UCenterApi extends HttpClient
         return $data->roles;
     }
 
-    public function removeRoleForUser($userId, $role, $domainId = null, $accessToken)
+    public function removeRoleForUser($accessToken, $userId, $role, $domainId = null)
     {
         return $this->delete('/api/user/role', [
             'access_token' => $accessToken,
@@ -339,7 +339,7 @@ class UCenterApi extends HttpClient
         ]);
     }
 
-    public function clearRolesForUser($userId, $domainId = null, $accessToken)
+    public function clearRolesForUser($accessToken, $userId, $domainId = null)
     {
         return $this->delete('/api/user', [
             'access_token' => $accessToken,

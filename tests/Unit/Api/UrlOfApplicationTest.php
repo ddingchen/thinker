@@ -20,7 +20,7 @@ class UrlOfApplicationTest extends TestCase
 
         $this->assertEquals(
             "http://api.com/api/sso/redirect?access_token=123&app_id=456&domain_id=789",
-            UCenterApi::urlOfApplication($appId = 456, $domainId = 789, $accessToken = 123)
+            UCenterApi::urlOfApplication($accessToken = 123, $appId = 456, $domainId = 789)
         );
     }
 

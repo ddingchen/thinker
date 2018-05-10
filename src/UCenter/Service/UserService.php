@@ -12,54 +12,54 @@ class UserService extends Service
 
     public function bindWechat($openId)
     {
-        return UCenterApi::bindWechat($openId, $this->accessToken);
+        return UCenterApi::bindWechat($this->accessToken, $openId);
     }
 
     public function unbindWechat($openId)
     {
-        return UCenterApi::unbindWechat($openId, $this->accessToken);
+        return UCenterApi::unbindWechat($this->accessToken, $openId);
     }
 
     public function find($userId)
     {
-        return UCenterApi::getUserById($userId, $this->accessToken);
+        return UCenterApi::getUserById($this->accessToken, $userId);
     }
 
     public function findByName($name)
     {
-        return UCenterApi::getUserByInfo([
+        return UCenterApi::getUserByInfo($this->accessToken, [
             'username' => $name,
-        ], $this->accessToken);
+        ]);
     }
 
     public function findByPhone($phone)
     {
-        return UCenterApi::getUserByInfo([
+        return UCenterApi::getUserByInfo($this->accessToken, [
             'phone' => $phone,
-        ], $this->accessToken);
+        ]);
     }
 
     public function findByNameAndPhone($name, $phone)
     {
-        return UCenterApi::getUserByInfo([
+        return UCenterApi::getUserByInfo($this->accessToken, [
             'username' => $name,
             'phone' => $phone,
-        ], $this->accessToken);
+        ]);
     }
 
     public function listInDomain($domainId)
     {
-        return UCenterApi::getUsersInDomain($domainId, $this->accessToken);
+        return UCenterApi::getUsersInDomain($this->accessToken, $domainId);
     }
 
     public function register($phone, $password, $username = null)
     {
-        return UCenterApi::registerUser($phone, $password, $username, $this->accessToken);
+        return UCenterApi::registerUser($this->accessToken, $phone, $password, $username);
     }
 
     public function deleteInDomain($userId, $domainId)
     {
-        return UCenterApi::clearRolesForUser($userId, $domainId, $this->accessToken);
+        return UCenterApi::clearRolesForUser($this->accessToken, $userId, $domainId);
     }
 
 }

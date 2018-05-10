@@ -15,10 +15,10 @@ class AppService extends Service
     public function listInDomain($domainId)
     {
         if ($this->selfRelated) {
-            return UCenterApi::getMyAppsInDomain($domainId, $this->accessToken);
+            return UCenterApi::getMyAppsInDomain($this->accessToken, $domainId);
         }
 
-        return UCenterApi::getAppsInDomain($domainId, $this->accessToken);
+        return UCenterApi::getAppsInDomain($this->accessToken, $domainId);
     }
 
     public function selfRelated()

@@ -18,24 +18,24 @@ class DomainService extends Service
 
     public function search($keyword)
     {
-        return UCenterApi::searchDomains($keyword, $this->accessToken);
+        return UCenterApi::searchDomains($this->accessToken, $keyword);
     }
 
     public function find($domainId)
     {
-        return UCenterApi::getDomainById($domainId, $this->accessToken);
+        return UCenterApi::getDomainById($this->accessToken, $domainId);
     }
 
     public function create($name, $desc)
     {
-        return UCenterApi::createDomain($name, $desc, $this->accessToken);
+        return UCenterApi::createDomain($this->accessToken, $name, $desc);
     }
 
     public function updateDesc($desc, $forDomainId)
     {
-        return UCenterApi::updateDomain([
+        return UCenterApi::updateDomain($this->accessToken, [
             'description' => $desc,
-        ], $forDomainId, $this->accessToken);
+        ], $forDomainId);
     }
 
 }
