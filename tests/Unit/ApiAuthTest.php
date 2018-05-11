@@ -1,15 +1,12 @@
-<?php 
+<?php
 
 namespace Tests\Unit;
 
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 use Thinker\Facades\UCenter;
-use Thinker\Facades\UCenterApi;
 use Thinker\Models\AccessToken;
 use Thinker\Models\User;
-
+use Thinker\Testing\HttpClientFake;
 
 class ApiAuthTest extends TestCase
 {
@@ -20,16 +17,16 @@ class ApiAuthTest extends TestCase
     {
         parent::setUp();
 
+        $this->clientFake = new HttpClientFake();
         $this->apiAuth = UCenter::apiAuth();
     }
 
     public function test_it_returns_user_info_if_credentials_are_correct()
     {
-        $fake = UCenterApi::fake();
-        $fake->action('getUser')
-            ->using(['user_id' => 123])->push();
-        $fake->action('getAccessTokenByPassword')
-            ->using(['access_token' => 'new token'])->push();
+        $this->clientFake
+            ->mock('getAccessTokenByPassword', ['access_token' => 'new token'])
+            ->mock('getUser', ['user_id' => 123])
+            ->applyClient();
 
         $user = $this->apiAuth->user('chen', '123456');
 
@@ -38,5 +35,5 @@ class ApiAuthTest extends TestCase
         $this->assertInstanceOf(AccessToken::class, $user->accessToken());
         $this->assertEquals('new token', $user->access_token);
     }
-    
+
 }

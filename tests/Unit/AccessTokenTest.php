@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Thinker\Facades\UCenterApi;
 use Thinker\Models\AccessToken;
+use Thinker\Testing\HttpClientFake;
 use Thinker\Testing\UCenterApiFake;
 
 class AccessTokenTest extends TestCase
@@ -16,6 +17,7 @@ class AccessTokenTest extends TestCase
     {
         parent::setUp();
 
+        $this->clientFake = new HttpClientFake();
         $this->accessToken = new AccessToken(['access_token' => '123']);
     }
 
@@ -26,10 +28,9 @@ class AccessTokenTest extends TestCase
 
     public function test_it_refresh_by_refresh_token()
     {
-        $fake = UCenterApi::fake();
-        $fake->action('refreshAccessToken')
-            ->using(['access_token' => 'new_access_token'])
-            ->push();
+        $this->clientFake
+            ->mock('refreshAccessToken', ['access_token' => 'new_access_token'])
+            ->applyClient();
 
         $this->accessToken->refresh();
 

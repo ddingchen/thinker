@@ -10,6 +10,7 @@ use Thinker\Facades\UCenter;
 use Thinker\Facades\UCenterApi;
 use Thinker\Models\AccessToken;
 use Thinker\Models\User;
+use Thinker\Testing\HttpClientFake;
 
 
 class WechatAuthTest extends TestCase
@@ -21,16 +22,16 @@ class WechatAuthTest extends TestCase
     {
         parent::setUp();
 
+        $this->clientFake = new HttpClientFake();
         $this->wechatAuth = UCenter::wechatAuth();
     }
 
     public function test_it_returns_user_info_if_openid_is_valid()
     {
-        $fake = UCenterApi::fake();
-        $fake->action('getUser')
-            ->using(['user_id' => 123])->push();
-        $fake->action('getAccessTokenByOpenId')
-            ->using(['access_token' => 'new token'])->push();
+        $this->clientFake
+            ->mock('getAccessTokenByOpenId', ['access_token' => 'new token'])
+            ->mock('getUser', ['user_id' => 123])
+            ->applyClient();
 
         $user = $this->wechatAuth->user($openId = '123456', $adminAccessToken = '123456');
 

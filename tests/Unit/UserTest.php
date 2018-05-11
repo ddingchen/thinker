@@ -3,11 +3,12 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Thinker\UCenter\Service\AppService;
-use Thinker\UCenter\Service\DomainService;
 use Thinker\Facades\UCenterApi;
 use Thinker\Models\AccessToken;
 use Thinker\Models\User;
+use Thinker\Testing\HttpClientFake;
+use Thinker\UCenter\Service\AppService;
+use Thinker\UCenter\Service\DomainService;
 use Thinker\UCenter\Service\RoleService;
 
 class UserTest extends TestCase
@@ -17,6 +18,7 @@ class UserTest extends TestCase
     {
         parent::setUp();
 
+        $this->clientFake = new HttpClientFake();
         $user = new User([
             'id' => 123,
             'username' => 'chen.d',
@@ -47,10 +49,9 @@ class UserTest extends TestCase
 
     public function test_it_may_reload_users_profile()
     {
-        $fake = UCenterApi::fake();
-        $fake->action('getUser')
-            ->using(['user_id' => 123])
-            ->push();
+        $this->clientFake
+            ->mock('getUser', ['user_id' => 123])
+            ->applyClient();
 
         $this->user->fresh();
 
@@ -59,13 +60,10 @@ class UserTest extends TestCase
 
     public function test_it_may_update_props()
     {
-        $fake = UCenterApi::fake();
-        $fake->action('updateUser')
-            ->using([
-                'email' => 'ding@chen.com',
-                'username' => 'chen.d'
-            ])
-            ->push();
+        $this->clientFake->mock('updateUser', [
+            'email' => 'ding@chen.com',
+            'username' => 'chen.d'
+        ])->applyClient();
         
         $this->user->update([
             'username' => 'chen.d',

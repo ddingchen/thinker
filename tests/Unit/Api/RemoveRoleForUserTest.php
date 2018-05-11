@@ -5,13 +5,21 @@ namespace Tests\Unit\Api;
 use Tests\TestCase;
 use Thinker\Exceptions\UCenterException;
 use Thinker\Facades\UCenterApi;
+use Thinker\Testing\HttpClientFake;
 
 class RemoveRoleForUserTest extends TestCase
 {
 
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->clientFake = new HttpClientFake();
+    }
+
     public function test_it_returns_ok()
     {
-        UCenterApi::fake();
+        $this->clientFake->mock('removeRoleForUser')->applyClient();
 
         $result = UCenterApi::removeRoleForUser(1, 'admin', 1, $accessToken = 'access_token');
 
@@ -20,10 +28,9 @@ class RemoveRoleForUserTest extends TestCase
 
     public function test_it_returns_role_invalid()
     {
-        $fake = UCenterApi::fake();
-        $fake->action('removeRoleForUser')
-            ->expect('role_invalid')
-            ->push();
+        $this->clientFake
+            ->mockCase('removeRoleForUser', 'role_invalid')
+            ->applyClient();
 
         $this->expectException(UCenterException::class);
 

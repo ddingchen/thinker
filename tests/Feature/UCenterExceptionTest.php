@@ -1,24 +1,32 @@
 <?php
 
-namespace Tests\Unit\Api;
+namespace Tests\Feature;
 
 use Tests\TestCase;
 use Thinker\Exceptions\UCenterException;
 use Thinker\Facades\UCenterApi;
+use Thinker\Testing\HttpClientFake;
 
 class UCenterExceptionTest extends TestCase
 {
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->clientFake = new HttpClientFake();
+    }
     
     public function test_it_returns_credentials_incorrect()
     {
-        $fake = UCenterApi::fake();
-        $fake->action('GetAccessTokenByPassword')
-            ->expect('credentials_incorrect')
-            ->using(['username' => 'dc', 'password' => '123456'])
-            ->push();
+        $this->clientFake
+            ->mockCase('getAccessTokenByPassword', 'credentials_incorrect', [
+                'username' => 'dc', 'password' => '123456'
+            ])
+            ->applyClient();
 
         try {
-            UCenterApi::GetAccessTokenByPassword('dc', '123');
+            UCenterApi::getAccessTokenByPassword('dc', '123');
         } catch(UCenterException $exception) {
             $this->assertEquals(401, $exception->statusCode);
             $this->assertEquals(401, $exception->code);

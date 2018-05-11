@@ -7,16 +7,26 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
+use Thinker\Events\AccessTokenRefreshed;
 use Thinker\Exceptions\UCenterException;
+use Thinker\Facades\UCenterApi;
 
 class HttpClient
 {
 
     protected $client;
 
+    protected $refreshToken;
+
     public function __construct(Client $client)
     {
         $this->client = $client;
+    }
+
+    public function withRefreshToken($refreshToken)
+    {
+        $this->refreshToken = $refreshToken;
+        return $this;
     }
 
     protected function get($url, $data)
@@ -46,6 +56,12 @@ class HttpClient
             'http_errors' => false,
         ]);
 
+        // access token expired or invalid
+        if ($response->getStatusCode() == 401 && $this->refreshToken) {
+            // refresh access token and try to request again
+            return $this->tryAgain($method, $url, $data);
+        }
+
         $body = json_decode($response->getBody());
         if ($body->code !== 0) {
             throw new UCenterException(
@@ -57,6 +73,21 @@ class HttpClient
         }
 
         return $body->data;
+    }
+
+    protected function tryAgain($method, $url, $data)
+    {
+        $tokenPair = UCenterApi::refreshAccessToken($this->refreshToken);
+
+        event(new AccessTokenRefreshed($tokenPair));
+
+        return $this->request(
+            $method,
+            $url,
+            array_merge($data, [
+                'access_token' => $tokenPair->access_token
+            ])
+        );
     }
 
     protected function optionNameForMethod($method)
@@ -80,69 +111,5 @@ class HttpClient
 
         // 转换为Object
         return json_decode(json_encode($data));
-    }
-
-    public function makeApiDemoClient($action, $case = 'ok', $customData = [], $replace = false)
-    {
-        $demos = require __DIR__ . "/../../tests/ApiResponseDemo/{$action}.php";
-        $demo = $demos[$case];
-
-        // merge demo json with custom data
-        $customData = $this->addPrefixForKeys($customData, 'data.');
-
-        if ($replace) {
-            $demo['json'] = $this->clearData($demo['json']);
-        }
-        $demoJson = $this->mergeArrayToJson($demo['json'], $customData);
-
-        return $this->makeHttpClient(
-            $demoJson,
-            $demo['status']
-        );
-    }
-
-    public function makeHttpClient($result, $statusCode = 200)
-    {
-        $stream = Psr7\stream_for($result);
-        $response = new Response($statusCode, [], $stream);
-        $mock = new MockHandler([
-            $response,
-        ]);
-        $handler = HandlerStack::create($mock);
-
-        return new Client([
-            'handler' => $handler,
-            'http_errors' => false,
-        ]);
-    }
-
-    public function addPrefixForKeys($array, $prefix)
-    {
-        return collect($array)->mapWithKeys(function ($value, $key) {
-            return ['data.' . $key => $value];
-        })->toArray();
-    }
-
-    public function mergeArrayToJson($json, $array)
-    {
-        // convert json to array
-        $tmp = json_decode($json, true);
-
-        // map array
-        foreach ($array as $key => $value) {
-            data_set($tmp, $key, $value);
-        }
-
-        // convert back
-        return json_encode($tmp);
-    }
-
-    public function clearData($json)
-    {
-        $array = json_decode($json, true);
-
-        $array['data'] = null;
-
-        return json_encode($array);
     }
 }

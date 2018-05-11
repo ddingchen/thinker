@@ -3,33 +3,31 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use Thinker\Testing\HttpClientFake;
 use Thinker\UCenter\Service\AppService;
-use Thinker\Facades\UCenterApi;
 
 class AppServiceTest extends TestCase
 {
-    
+
     protected function setUp()
     {
         parent::setUp();
-    
-        $this->fake = UCenterApi::fake();
+
+        $this->clientFake = new HttpClientFake();
         $this->service = new AppService('token');
     }
 
     public function test_it_lists_all_apps_in_a_domain()
     {
-        // $fake = UCenterApi::fake();
-        $this->fake->action('getAppsInDomain')
-            ->using([
-                'apps' => [
-                    '123' => [
-                        "id" => 123,
-                        "name" => "my app",
-                        "tile" => ""
-                    ]
-                ]
-            ])->push();
+        $this->clientFake->mock('getAppsInDomain', [
+            'apps' => [
+                '123' => [
+                    "id" => 123,
+                    "name" => "my app",
+                    "tile" => "",
+                ],
+            ],
+        ])->applyClient();
 
         $apps = $this->service->listInDomain(1);
 
@@ -38,14 +36,13 @@ class AppServiceTest extends TestCase
 
     public function test_it_lists_all_my_apps_in_a_domain()
     {
-        $this->fake->action('getMyAppsInDomain')
-            ->using([
-                '123' => [
-                    "id" => 123,
-                    "name" => "my app",
-                    "tile" => ""
-                ]
-            ], true)->push();
+        $this->clientFake->mock('getMyAppsInDomain', [
+            '123' => [
+                "id" => 123,
+                "name" => "my app",
+                "tile" => "",
+            ],
+        ], true)->applyClient();
 
         $apps = $this->service->selfRelated()->listInDomain(1);
 

@@ -3,12 +3,9 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Thinker\Facades\UCenterApi;
+use Thinker\Testing\HttpClientFake;
 use Thinker\UCenter\Service\UserService;
 
-/**
- * UserServiceTest
- */
 class UserServiceTest extends TestCase
 {
 
@@ -18,15 +15,15 @@ class UserServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->fake = UCenterApi::fake();
+        $this->clientFake = new HttpClientFake();
         $this->service = new UserService('token');
     }
 
     public function test_it_returns_a_user()
     {
-        $this->fake->action('getUserById')
-            ->using(["user_id" => 123])
-            ->push();
+        $this->clientFake
+            ->mock('getUserById', ["user_id" => 123])
+            ->applyClient();
 
         $result = $this->service->find(1);
 
@@ -35,9 +32,9 @@ class UserServiceTest extends TestCase
 
     public function test_it_finds_a_user_by_username()
     {
-        $this->fake->action('getUserByInfo')
-            ->using(["user_id" => 123])
-            ->push();
+        $this->clientFake
+            ->mock('getUserByInfo', ["user_id" => 123])
+            ->applyClient();
 
         $result = $this->service->findByName('name');
 
@@ -46,9 +43,9 @@ class UserServiceTest extends TestCase
 
     public function test_it_finds_a_user_by_phone()
     {
-        $this->fake->action('getUserByInfo')
-            ->using(["user_id" => 123])
-            ->push();
+        $this->clientFake
+            ->mock('getUserByInfo', ["user_id" => 123])
+            ->applyClient();
 
         $result = $this->service->findByPhone('12345678901');
 
@@ -57,9 +54,9 @@ class UserServiceTest extends TestCase
 
     public function test_it_finds_a_user_by_username_and_phone()
     {
-        $this->fake->action('getUserByInfo')
-            ->using(["user_id" => 123])
-            ->push();
+        $this->clientFake
+            ->mock('getUserByInfo', ["user_id" => 123])
+            ->applyClient();
 
         $result = $this->service->findByNameAndPhone('name', '12345678901');
 
@@ -68,22 +65,20 @@ class UserServiceTest extends TestCase
 
     public function test_it_lists_users_in_a_domain()
     {
-        $this->fake->action('getUsersInDomain')
-            ->using(["users" => [
-                "1001" => [
-                    "user_id" => 1001,
-                    "username" => "",
-                    "email" => "",
-                    "phone" => "",
-                    "details" => [
-                        "realname" => [
-                            "title" => "姓名",
-                            "value" => "",
-                        ],
+        $this->clientFake->mock('getUsersInDomain', ["users" => [
+            "1001" => [
+                "user_id" => 1001,
+                "username" => "",
+                "email" => "",
+                "phone" => "",
+                "details" => [
+                    "realname" => [
+                        "title" => "姓名",
+                        "value" => "",
                     ],
                 ],
-            ]])
-            ->push();
+            ],
+        ]])->applyClient();
 
         $users = $this->service->listInDomain(1);
 
@@ -92,9 +87,9 @@ class UserServiceTest extends TestCase
 
     public function test_it_register_a_new_user()
     {
-        $this->fake->action('registerUser')
-            ->using(["user_id" => 123])
-            ->push();
+        $this->clientFake
+            ->mock('registerUser', ["user_id" => 123])
+            ->applyClient();
 
         $user = $this->service->register('12345678901', '123456', 'name');
 
@@ -103,14 +98,18 @@ class UserServiceTest extends TestCase
 
     public function test_it_deletes_user_in_a_domain()
     {
+        $this->clientFake
+            ->mock('bindWechat', ['user_id' => 123])
+            ->applyClient();
+
         $this->service->deleteInDomain(1, 1);
     }
 
     public function test_it_bind_wechat_to_user_account()
     {
-        $this->fake->action('bindWechat')
-            ->using(['user_id' => 123])
-            ->push();
+        $this->clientFake
+            ->mock('removeRoleForUser', ['user_id' => 123])
+            ->applyClient();
 
         $response = $this->service->bindWechat('123456');
 
@@ -119,9 +118,9 @@ class UserServiceTest extends TestCase
 
     public function test_it_unbind_wechat_from_user_account()
     {
-        $this->fake->action('unbindWechat')
-            ->using(['user_id' => 123])
-            ->push();
+        $this->clientFake
+            ->mock('unbindWechat', ['user_id' => 123])
+            ->applyClient();
 
         $response = $this->service->unbindWechat('123456');
 
