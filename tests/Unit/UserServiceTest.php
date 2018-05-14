@@ -16,7 +16,6 @@ class UserServiceTest extends TestCase
         parent::setUp();
 
         $this->clientFake = new HttpClientFake();
-        $this->service = new UserService('token');
     }
 
     public function test_it_returns_a_user()
@@ -25,7 +24,7 @@ class UserServiceTest extends TestCase
             ->mock('getUserById', ["user_id" => 123])
             ->applyClient();
 
-        $result = $this->service->find(1);
+        $result = (new UserService($this->fakeToken()))->find(1);
 
         $this->assertEquals(123, $result->user_id);
     }
@@ -36,7 +35,7 @@ class UserServiceTest extends TestCase
             ->mock('getUserByInfo', ["user_id" => 123])
             ->applyClient();
 
-        $result = $this->service->findByName('name');
+        $result = (new UserService($this->fakeToken()))->findByName('name');
 
         $this->assertEquals(123, $result->user_id);
     }
@@ -47,7 +46,7 @@ class UserServiceTest extends TestCase
             ->mock('getUserByInfo', ["user_id" => 123])
             ->applyClient();
 
-        $result = $this->service->findByPhone('12345678901');
+        $result = (new UserService($this->fakeToken()))->findByPhone('12345678901');
 
         $this->assertEquals(123, $result->user_id);
     }
@@ -58,7 +57,7 @@ class UserServiceTest extends TestCase
             ->mock('getUserByInfo', ["user_id" => 123])
             ->applyClient();
 
-        $result = $this->service->findByNameAndPhone('name', '12345678901');
+        $result = (new UserService($this->fakeToken()))->findByNameAndPhone('name', '12345678901');
 
         $this->assertEquals(123, $result->user_id);
     }
@@ -80,7 +79,7 @@ class UserServiceTest extends TestCase
             ],
         ]])->applyClient();
 
-        $users = $this->service->listInDomain(1);
+        $users = (new UserService($this->fakeToken()))->listInDomain(1);
 
         $this->assertCount(1, $users);
     }
@@ -91,7 +90,7 @@ class UserServiceTest extends TestCase
             ->mock('registerUser', ["user_id" => 123])
             ->applyClient();
 
-        $user = $this->service->register('12345678901', '123456', 'name');
+        $user = (new UserService($this->fakeToken()))->register('12345678901', '123456', 'name');
 
         $this->assertEquals(123, $user->user_id);
     }
@@ -102,7 +101,7 @@ class UserServiceTest extends TestCase
             ->mock('bindWechat', ['user_id' => 123])
             ->applyClient();
 
-        $this->service->deleteInDomain(1, 1);
+        (new UserService($this->fakeToken()))->deleteInDomain(1, 1);
     }
 
     public function test_it_bind_wechat_to_user_account()
@@ -111,7 +110,7 @@ class UserServiceTest extends TestCase
             ->mock('removeRoleForUser', ['user_id' => 123])
             ->applyClient();
 
-        $response = $this->service->bindWechat('123456');
+        $response = (new UserService($this->fakeToken()))->bindWechat('123456');
 
         $this->assertEquals(123, $response->user_id);
     }
@@ -122,7 +121,7 @@ class UserServiceTest extends TestCase
             ->mock('unbindWechat', ['user_id' => 123])
             ->applyClient();
 
-        $response = $this->service->unbindWechat('123456');
+        $response = (new UserService($this->fakeToken()))->unbindWechat('123456');
 
         $this->assertEquals(123, $response->user_id);
     }

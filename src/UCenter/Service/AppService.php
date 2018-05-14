@@ -2,11 +2,6 @@
 
 namespace Thinker\UCenter\Service;
 
-use Thinker\Facades\UCenterApi;
-
-/**
- * AppService
- */
 class AppService extends Service
 {
 
@@ -15,10 +10,10 @@ class AppService extends Service
     public function listInDomain($domainId)
     {
         if ($this->selfRelated) {
-            return UCenterApi::getMyAppsInDomain($this->accessToken, $domainId);
+            return $this->ucenterApi->getMyAppsInDomain($this->accessToken, $domainId);
         }
 
-        return UCenterApi::getAppsInDomain($this->accessToken, $domainId);
+        return $this->ucenterApi->getAppsInDomain($this->accessToken, $domainId);
     }
 
     public function selfRelated()

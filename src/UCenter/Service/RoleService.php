@@ -2,8 +2,6 @@
 
 namespace Thinker\UCenter\Service;
 
-use Thinker\Facades\UCenterApi;
-
 class RoleService extends Service
 {
 
@@ -17,17 +15,17 @@ class RoleService extends Service
     {
         if ($this->selfRelated) {
             if ($this->withPermissions) {
-                return UCenterApi::getMyRolesWithPermissionsInDomain($this->accessToken, $this->domainId);
+                return $this->ucenterApi->getMyRolesWithPermissionsInDomain($this->accessToken, $this->domainId);
             }
 
-            return UCenterApi::getMyRolesInDomain($this->accessToken, $this->domainId);
+            return $this->ucenterApi->getMyRolesInDomain($this->accessToken, $this->domainId);
         }
 
         if ($this->domainId) {
-            return UCenterApi::getRolesInDomain($this->accessToken, $this->domainId);
+            return $this->ucenterApi->getRolesInDomain($this->accessToken, $this->domainId);
         }
 
-        return UCenterApi::getRolesInCurrentApp($this->accessToken);
+        return $this->ucenterApi->getRolesInCurrentApp($this->accessToken);
     }
 
     public function inDomain($id)
@@ -56,17 +54,17 @@ class RoleService extends Service
 
     public function add($role)
     {
-        return UCenterApi::addRoleForUser($this->accessToken, $this->userId, $role, $this->domainId);
+        return $this->ucenterApi->addRoleForUser($this->accessToken, $this->userId, $role, $this->domainId);
     }
 
     public function remove($role)
     {
-        return UCenterApi::removeRoleForUser($this->accessToken, $this->userId, $role, $this->domainId);
+        return $this->ucenterApi->removeRoleForUser($this->accessToken, $this->userId, $role, $this->domainId);
     }
 
     public function clear()
     {
-        return UCenterApi::clearRolesForUser($this->accessToken, $this->userId, $this->domainId);
+        return $this->ucenterApi->clearRolesForUser($this->accessToken, $this->userId, $this->domainId);
     }
 
 }

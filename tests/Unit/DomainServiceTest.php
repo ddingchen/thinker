@@ -20,7 +20,6 @@ class DomainServiceTest extends TestCase
         parent::setUp();
 
         $this->clientFake = new HttpClientFake();
-        $this->service = new DomainService('token');
     }
 
     public function test_it_returns_all_domains_associated_with_current_app()
@@ -33,7 +32,7 @@ class DomainServiceTest extends TestCase
             ]
         ], true)->applyClient();
 
-        $domains = $this->service->listAll();
+        $domains = (new DomainService($this->fakeToken()))->listAll();
 
         $this->assertCount(1, $domains);
     }
@@ -50,7 +49,7 @@ class DomainServiceTest extends TestCase
             ]
         ], true)->applyClient();
 
-        $domains = $this->service->search('keyword');
+        $domains = (new DomainService($this->fakeToken()))->search('keyword');
 
         $this->assertCount(1, $domains);
     }
@@ -61,7 +60,7 @@ class DomainServiceTest extends TestCase
             ->mock('getDomainById', ["domain.id" => 123])
             ->applyClient();
 
-        $domain = $this->service->find(1);
+        $domain = (new DomainService($this->fakeToken()))->find(1);
 
         $this->assertEquals(123, $domain->domain->id);
     }
@@ -72,7 +71,7 @@ class DomainServiceTest extends TestCase
             ->mock('createDomain', ["id" => 123])
             ->applyClient();
 
-        $domain = $this->service->create('name', 'desc');
+        $domain = (new DomainService($this->fakeToken()))->create('name', 'desc');
 
         $this->assertEquals(123, $domain->id);
     }
@@ -83,7 +82,7 @@ class DomainServiceTest extends TestCase
             ->mock('updateDomain', ["description" => 'new desc'])
             ->applyClient();
 
-        $domain = $this->service->updateDesc(1, 'new desc');
+        $domain = (new DomainService($this->fakeToken()))->updateDesc(1, 'new desc');
 
         $this->assertEquals('new desc', $domain->description);
     }

@@ -19,7 +19,7 @@ class User
 
     public $phone;
 
-    public $access_token_model;
+    protected $access_token_model;
 
     public function __construct($data)
     {
@@ -75,17 +75,17 @@ class User
 
     public function domains()
     {
-        return new DomainService($this->access_token);
+        return new DomainService($this->accessToken());
     }
 
     public function apps()
     {
-        return new AppService($this->access_token);
+        return new AppService($this->accessToken());
     }
 
     public function roles()
     {
-        return new RoleService($this->access_token);
+        return new RoleService($this->accessToken());
     }
 
     public function __get($name)

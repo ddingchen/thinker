@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Thinker\Facades\UCenterApi;
 use Thinker\Testing\HttpClientFake;
 use Thinker\UCenter\Service\RoleService;
 
@@ -11,13 +10,12 @@ class RoleServiceTest extends TestCase
 {
 
     private $service;
-    
+
     protected function setUp()
     {
         parent::setUp();
-    
+
         $this->clientFake = new HttpClientFake();
-        $this->service = new RoleService('token');
     }
 
     public function test_it_lists_all_roles_in_current_app()
@@ -31,11 +29,11 @@ class RoleServiceTest extends TestCase
                 "description" => "访客",
                 "created_at" => "2017-04-11 00:47:48",
                 "updated_at" => "2017-04-11 00:47:48",
-                "perms" => []
-            ]
+                "perms" => [],
+            ],
         ], true)->applyClient();
 
-        $roles = $this->service->listAll();
+        $roles = (new RoleService($this->fakeToken()))->listAll();
 
         $this->assertCount(1, $roles);
     }
@@ -52,12 +50,12 @@ class RoleServiceTest extends TestCase
                     "description" => "访客",
                     "created_at" => "2017-04-11 00:47:48",
                     "updated_at" => "2017-04-11 00:47:48",
-                    "perms" => []
-                ]
-            ]
+                    "perms" => [],
+                ],
+            ],
         ], true)->applyClient();
 
-        $roles = $this->service->inDomain(1)->listAll();
+        $roles = (new RoleService($this->fakeToken()))->inDomain(1)->listAll();
 
         $this->assertCount(1, $roles);
     }
@@ -69,12 +67,12 @@ class RoleServiceTest extends TestCase
                 [
                     "id" => 1,
                     "name" => "common",
-                    "title" => "普通用户"
-                ]
-            ]
+                    "title" => "普通用户",
+                ],
+            ],
         ])->applyClient();
 
-        $roles = $this->service->selfRelated()->inDomain(1)->listAll();
+        $roles = (new RoleService($this->fakeToken()))->selfRelated()->inDomain(1)->listAll();
 
         $this->assertCount(1, $roles);
     }
@@ -91,19 +89,19 @@ class RoleServiceTest extends TestCase
                         [
                             "id" => 39,
                             "name" => "create-permission",
-                            "title" => "创建权限"
+                            "title" => "创建权限",
                         ],
                         [
                             "id" => 38,
                             "name" => "create-app",
-                            "title" => "创建应用"
-                        ]
-                    ]
-                ]
-            ]
+                            "title" => "创建应用",
+                        ],
+                    ],
+                ],
+            ],
         ])->applyClient();
 
-        $roles = $this->service->selfRelated()->withPermissions()->inDomain(1)->listAll();
+        $roles = (new RoleService($this->fakeToken()))->selfRelated()->withPermissions()->inDomain(1)->listAll();
 
         $this->assertCount(1, $roles);
         $this->assertCount(2, $roles[0]->permissions);
@@ -115,7 +113,7 @@ class RoleServiceTest extends TestCase
             ->mock('addRoleForUser', ["roles" => ['guest']])
             ->applyClient();
 
-        $result = $this->service->forUser(1)->inDomain(1)->add('guest');
+        $result = (new RoleService($this->fakeToken()))->forUser(1)->inDomain(1)->add('guest');
 
         $this->assertEquals(['guest'], $result);
     }
@@ -124,14 +122,14 @@ class RoleServiceTest extends TestCase
     {
         $this->clientFake->mock('removeRoleForUser')->applyClient();
 
-        $this->service->forUser(1)->inDomain(1)->remove('manger');
+        (new RoleService($this->fakeToken()))->forUser(1)->inDomain(1)->remove('manger');
     }
 
     public function test_it_clear_all_roles_for_a_user()
     {
         $this->clientFake->mock('removeRoleForUser')->applyClient();
-        
-        $this->service->forUser(1)->inDomain(1)->clear();
+
+        (new RoleService($this->fakeToken()))->forUser(1)->inDomain(1)->clear();
     }
 
 }

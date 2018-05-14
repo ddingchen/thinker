@@ -10,6 +10,7 @@ use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Exceptions\Handler;
 use Orchestra\Testbench\TestCase as TestbenchTest;
+use Thinker\Models\AccessToken;
 
 class TestCase extends TestbenchTest
 {
@@ -69,6 +70,16 @@ class TestCase extends TestbenchTest
     {
         $this->app->instance(ExceptionHandler::class, $this->oldExceptionHandler);
         return $this;
+    }
+
+    protected function fakeToken()
+    {
+        return new AccessToken([
+            'access_token' => 'fake token',
+            'token_type' => 'Bearer',
+            'expires_in' => 7200,
+            'refresh_token' => 'fake refresh token',
+        ]);
     }
 
 }

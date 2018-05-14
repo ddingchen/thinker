@@ -14,7 +14,6 @@ class AppServiceTest extends TestCase
         parent::setUp();
 
         $this->clientFake = new HttpClientFake();
-        $this->service = new AppService('token');
     }
 
     public function test_it_lists_all_apps_in_a_domain()
@@ -29,7 +28,7 @@ class AppServiceTest extends TestCase
             ],
         ])->applyClient();
 
-        $apps = $this->service->listInDomain(1);
+        $apps = (new AppService($this->fakeToken()))->listInDomain(1);
 
         $this->assertCount(1, $apps);
     }
@@ -44,7 +43,7 @@ class AppServiceTest extends TestCase
             ],
         ], true)->applyClient();
 
-        $apps = $this->service->selfRelated()->listInDomain(1);
+        $apps = (new AppService($this->fakeToken()))->selfRelated()->listInDomain(1);
 
         $this->assertCount(1, $apps);
     }
