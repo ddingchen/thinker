@@ -14,7 +14,7 @@ class Service
 
     public function __construct(AccessToken $accessToken)
     {
-        $this->accessToken = $accessToken;
+        $this->accessToken = $accessToken->access_token;
         $this->ucenterApi = UCenterApi::withRefreshToken($accessToken->refresh_token);
     }
 }
