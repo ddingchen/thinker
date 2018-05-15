@@ -52,7 +52,8 @@ class User
 
     public function fresh()
     {
-        $user = UCenterApi::getUser($this->access_token);
+        $user = UCenterApi::withRefreshToken($this->accessToken()->refresh_token)
+            ->getUser($this->access_token);
         foreach ($user as $field => $value) {
             $this->$field = $value;
         }
@@ -61,7 +62,8 @@ class User
 
     public function update($data)
     {
-        $user = UCenterApi::updateUser($this->access_token, $data);
+        $user = UCenterApi::withRefreshToken($this->accessToken()->refresh_token)
+            ->updateUser($this->access_token, $data);
         foreach ($user as $field => $value) {
             $this->$field = $value;
         }
