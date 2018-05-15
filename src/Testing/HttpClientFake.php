@@ -29,21 +29,27 @@ class HttpClientFake
 
     public function applyClient()
     {
-        // generate guzzle response
-        $guzzleResponses = array_map(function ($response) {
-            $stream = Psr7\stream_for($response['json']);
-            return new Response($response['status'], [], $stream);
-        }, $this->responses);
+        app()->instance('GuzzleHttp\Client', $this->makeClient());
+    }
 
-        $mock = new MockHandler($guzzleResponses);
+    public function makeClient()
+    {
+        $mock = new MockHandler($this->makeResponses());
         $handler = HandlerStack::create($mock);
 
-        $client = new Client([
+        return new Client([
             'handler' => $handler,
             'http_errors' => false,
         ]);
+    }
 
-        app()->instance('GuzzleHttp\Client', $client);
+    public function makeResponses()
+    {
+        // generate guzzle response
+        return array_map(function ($response) {
+            $stream = Psr7\stream_for($response['json']);
+            return new Response($response['status'], [], $stream);
+        }, $this->responses);
     }
 
     protected function mockResponse($api, $case = 'ok', $mergeData = [], $dataFullReplace = false)
