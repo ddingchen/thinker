@@ -70,7 +70,7 @@ class User
 
     public function users()
     {
-        return new UserService($this->access_token);
+        return new UserService($this->accessToken());
     }
 
     public function domains()
