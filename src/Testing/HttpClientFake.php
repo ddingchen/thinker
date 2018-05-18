@@ -55,6 +55,7 @@ class HttpClientFake
     protected function mockResponse($api, $case = 'ok', $mergeData = [], $dataFullReplace = false)
     {
         // retrieve demo case
+        $api = ucfirst($api);
         $demos = require __DIR__ . "/../../tests/ApiResponseDemo/{$api}.php";
         $demo = $demos[$case];
 
@@ -69,7 +70,6 @@ class HttpClientFake
         // generate reponse data
         $demoJson = $this->mergeArrayToJson($demo['json'], $mergeData);
 
-        // return $this->responses($demoJson, $demo['status']);
         array_push($this->responses, [
             'status' => $demo['status'],
             'json' => $demoJson,
