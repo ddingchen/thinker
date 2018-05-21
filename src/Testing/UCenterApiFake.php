@@ -8,6 +8,19 @@ use Thinker\UCenterApi;
 class UCenterApiFake
 {
 
+    protected $responses = [];
+
+    public function mockResponse($api, $case = 'ok', $mergeData = [], $dataFullReplace = false)
+    {
+        $this->responses[$api][] = [
+            'case' => $case,
+            'data' => $mergeData,
+            'replace' => $dataFullReplace,
+        ];
+
+        return $this;
+    }
+
     public function __call($api, $arguments)
     {
         // 无需HTTP请求的action则直接调用
@@ -21,14 +34,22 @@ class UCenterApiFake
         }
 
         // 默认提取Demo中的“ok”Case作为返回
-        $demoName = ucfirst($api);
         $case = 'ok';
         $data = [];
         $replace = false;
 
+        // 如果有自定义返回则使用自定义返回数据
+        if (isset($this->responses[$api])) {
+            if ($custom = array_pop($this->responses[$api])) {
+                $case = $custom['case'];
+                $data = $custom['data'];
+                $replace = $custom['replace'];
+            }
+        }
+
         // mock Http Client
         $client = (new HttpClientFake)->mockCase(
-            $demoName,
+            $api,
             $case,
             $data,
             $replace
