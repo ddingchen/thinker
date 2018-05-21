@@ -23,5 +23,14 @@ return [
             }
         }',
     ],
+
+    'access_token_invalid' => [
+        'status' => 401,
+        'json' => '{
+            "code": 401,
+            "message": "access_token错误",
+            "data": {}
+        }',
+    ],
     
 ];
