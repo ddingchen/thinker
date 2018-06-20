@@ -37,5 +37,14 @@ return [
             }
         }',
     ],
+
+    'none' => [
+        'status' => 200,
+        'json' => '{
+            "code": 1,
+            "message": "用户不存在",
+            "data": {}
+        }',
+    ],
     
 ];

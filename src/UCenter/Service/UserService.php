@@ -2,6 +2,8 @@
 
 namespace Thinker\UCenter\Service;
 
+use Thinker\Exceptions\UCenterException;
+
 class UserService extends Service
 {
 
@@ -17,7 +19,16 @@ class UserService extends Service
 
     public function find($userId)
     {
-        return $this->ucenterApi->getUserById($this->accessToken, $userId);
+        try {
+            return $this->ucenterApi->getUserById($this->accessToken, $userId);
+        } catch (UCenterException $e) {
+            // 未找到该用户
+            if ($e->code == 1) {
+                return null;
+            }
+            // 其他异常
+            throw $e;
+        }
     }
 
     public function findByName($name)

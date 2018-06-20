@@ -29,6 +29,17 @@ class UserServiceTest extends TestCase
         $this->assertEquals(123, $result->user_id);
     }
 
+    public function test_it_returns_null_if_the_user_is_not_exist()
+    {
+        $this->clientFake
+            ->mockCase('getUserById', 'none')
+            ->applyClient();
+
+        $result = (new UserService($this->fakeToken()))->find(1);
+
+        $this->assertNull($result);
+    }
+
     public function test_it_finds_a_user_by_username()
     {
         $this->clientFake
