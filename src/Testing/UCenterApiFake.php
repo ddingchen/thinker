@@ -10,8 +10,12 @@ class UCenterApiFake
 
     protected $responses = [];
 
-    public function mockResponse($api, $case = 'ok', $mergeData = [], $dataFullReplace = false)
+    public function mockResponse($api, $case = 'ok', $mergeData = [], $dataFullReplace = false, $clearHistory = false)
     {
+        if ($clearHistory) {
+            unset($this->responses[$api]);
+        }
+
         $this->responses[$api][] = [
             'case' => $case,
             'data' => $mergeData,
