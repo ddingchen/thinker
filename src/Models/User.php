@@ -19,6 +19,8 @@ class User
 
     public $phone;
 
+    public $details;
+
     protected $access_token_model;
 
     public function __construct($data)

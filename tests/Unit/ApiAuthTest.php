@@ -25,13 +25,22 @@ class ApiAuthTest extends TestCase
     {
         $this->clientFake
             ->mock('getAccessTokenByPassword', ['access_token' => 'new token'])
-            ->mock('getUser', ['user_id' => 123])
+            ->mock('getUser', [
+                'user_id' => 123,
+                'details' => [
+                    'position' => [
+                        'title' => '职位',
+                        'value' => 'boss',
+                    ],
+                ],
+            ])
             ->applyClient();
 
         $user = $this->apiAuth->user('chen', '123456');
 
         $this->assertInstanceOf(User::class, $user);
         $this->assertEquals(123, $user->id);
+        $this->assertEquals('boss', $user->details->position->value);
         $this->assertInstanceOf(AccessToken::class, $user->accessToken());
         $this->assertEquals('new token', $user->access_token);
     }
