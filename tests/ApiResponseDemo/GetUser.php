@@ -13,6 +13,10 @@ return [
                 "email": "",
                 "phone": "",
                 "details": {
+                    "realname": {
+                        "title": "姓名",
+                        "value": ""
+                    },
                     "position": {
                         "title": "职位",
                         "value": ""
