@@ -2,6 +2,8 @@
 
 namespace Thinker\UCenter\Service;
 
+use Thinker\Exceptions\UCenterException;
+
 class RoleService extends Service
 {
 
@@ -13,12 +15,19 @@ class RoleService extends Service
 
     public function listAll()
     {
-        if ($this->selfRelated) {
-            if ($this->withPermissions) {
-                return $this->ucenterApi->getMyRolesWithPermissionsInDomain($this->accessToken, $this->domainId);
-            }
+        try {
+            if ($this->selfRelated) {
+                if ($this->withPermissions) {
+                    return $this->ucenterApi->getMyRolesWithPermissionsInDomain($this->accessToken, $this->domainId);
+                }
 
-            return $this->ucenterApi->getMyRolesInDomain($this->accessToken, $this->domainId);
+                return $this->ucenterApi->getMyRolesInDomain($this->accessToken, $this->domainId);
+            }
+        } catch (UCenterException $e) {
+            if ($e->statusCode == 404) {
+                // 用户不属于此域
+                return [];
+            }
         }
 
         if ($this->domainId) {

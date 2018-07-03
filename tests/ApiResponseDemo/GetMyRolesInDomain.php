@@ -24,6 +24,17 @@ return [
         }',
     ],
 
+    'none' => [
+        'status' => 404,
+        'json' => '{
+            "code": 404,
+            "message": "当前用户不属于此域",
+            "data": {
+                "domain": "1"
+            }
+        }',
+    ],
+
     'access_token_invalid' => [
         'status' => 401,
         'json' => '{

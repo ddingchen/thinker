@@ -77,6 +77,17 @@ class RoleServiceTest extends TestCase
         $this->assertCount(1, $roles);
     }
 
+    public function test_a_user_has_no_roles_in_domain()
+    {
+        $this->clientFake
+            ->mockCase('getMyRolesInDomain', 'none')
+            ->applyClient();
+
+        $roles = (new RoleService($this->fakeToken()))->selfRelated()->inDomain(1)->listAll();
+
+        $this->assertCount(0, $roles);
+    }
+
     public function test_it_lists_my_roles_with_permissions_in_a_domain()
     {
         $this->clientFake->mock('getMyRolesWithPermissionsInDomain', [
