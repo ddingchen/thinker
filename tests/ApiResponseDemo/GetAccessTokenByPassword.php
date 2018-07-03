@@ -25,4 +25,13 @@ return [
         }',
     ],
 
+    'non_existent_account' => [
+        'status' => 200,
+        'json' => '{
+            "code": 1,
+            "message": "获取access_token失败",
+            "data": {}
+        }',
+    ],
+
 ];
