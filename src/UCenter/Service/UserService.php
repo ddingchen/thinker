@@ -7,9 +7,9 @@ use Thinker\Exceptions\UCenterException;
 class UserService extends Service
 {
 
-    public function bindWechat($openId)
+    public function bindWechat($openId, $unionId = null)
     {
-        return $this->ucenterApi->bindWechat($this->accessToken, $openId);
+        return $this->ucenterApi->bindWechat($this->accessToken, $openId, $unionId);
     }
 
     public function unbindWechat($openId)

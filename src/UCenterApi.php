@@ -90,11 +90,12 @@ class UCenterApi extends HttpClient
      *
      * @return mixed
      */
-    public function bindWechat($accessToken, $openId)
+    public function bindWechat($accessToken, $openId, $unionId = null)
     {
         return $this->post('/api/user/wechat', [
             'access_token' => $accessToken,
             'openid' => $openId,
+            'unionid' => $unionId,
         ]);
     }
 
