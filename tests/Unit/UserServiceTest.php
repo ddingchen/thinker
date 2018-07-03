@@ -118,10 +118,21 @@ class UserServiceTest extends TestCase
     public function test_it_bind_wechat_to_user_account()
     {
         $this->clientFake
-            ->mock('removeRoleForUser', ['user_id' => 123])
+            ->mock('bindWechat', ['user_id' => 123])
             ->applyClient();
 
         $response = (new UserService($this->fakeToken()))->bindWechat('123456');
+
+        $this->assertEquals(123, $response->user_id);
+    }
+
+    public function test_it_force_bind_wechat_to_user_account()
+    {
+        $this->clientFake
+            ->mock('forceBindWechat', ['user_id' => 123])
+            ->applyClient();
+
+        $response = (new UserService($this->fakeToken()))->forceBindWechat('123456', 'admin_access_token');
 
         $this->assertEquals(123, $response->user_id);
     }

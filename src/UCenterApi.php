@@ -99,6 +99,16 @@ class UCenterApi extends HttpClient
         ]);
     }
 
+    public function forceBindWechat($accessToken, $adminAccessToken, $openId, $unionId = null)
+    {
+        return $this->put('/api/user/wechat', [
+            'access_token' => $accessToken,
+            'admin_access_token' => $adminAccessToken,
+            'openid' => $openId,
+            'unionid' => $unionId,
+        ]);
+    }
+
     /**
      * Unbind wechat to user account
      *
