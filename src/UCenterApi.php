@@ -307,7 +307,7 @@ class UCenterApi extends HttpClient
 
     public function getRolesWithPermissionsByUserInApp($accessToken, $userId, $appName)
     {
-        $data = $this->get('/api/users/' . $userId . '/app/' . $appName . '/rolePermission', [
+        $data = $this->get('/api/users/' . $userId . '/apps/' . $appName . '/rolePermission', [
             'access_token' => $accessToken,
         ]);
 
