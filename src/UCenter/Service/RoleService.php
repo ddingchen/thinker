@@ -37,7 +37,7 @@ class RoleService extends Service
         }
 
         if ($this->appName) {
-            return $this->ucenterApi->getRolesWithPermissionsByUserInApp($this->accessToken, $this->appName, $this->userId);
+            return $this->ucenterApi->getRolesWithPermissionsByUserInApp($this->accessToken, $this->userId, $this->appName);
         }
 
         return $this->ucenterApi->getRolesInCurrentApp($this->accessToken);
