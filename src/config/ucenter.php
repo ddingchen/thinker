@@ -9,5 +9,7 @@ return [
     'client_secret' => env('UCENTER_CLIENT_SECRET', ''),
 
     'redirect_uri' => env('UCENTER_REDIRECT_URI', ''),
+
+    'scope' => env('UCENTER_SCOPE', ''),
     
 ];

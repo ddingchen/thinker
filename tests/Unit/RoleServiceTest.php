@@ -118,6 +118,50 @@ class RoleServiceTest extends TestCase
         $this->assertCount(2, $roles[0]->permissions);
     }
 
+    public function test_it_lists_all_roles_by_an_user_and_an_app()
+    {
+        $this->clientFake->mock('getRolesWithPermissionsByUserInApp', [
+            "109" => [
+                "domain" => [
+                    "id" => 109,
+                    "name" => "工厂A",
+                    "description" => "工厂A",
+                ],
+                "roles" => [
+                    [
+                        "id" => 186,
+                        "name" => "customer",
+                        "title" => "经销商",
+                    ],
+                    [
+                        "id" => 12,
+                        "name" => "manger",
+                        "title" => "管理员",
+                    ]
+                ]
+            ],
+            "123" => [
+                "domain" => [
+                    "id" => 123,
+                    "name" => "工厂B",
+                    "description" => "工厂B",
+                ],
+                "roles" => [
+                    [
+                        "id" => 186,
+                        "name" => "customer",
+                        "title" => "经销商",
+                    ]
+                ]
+            ],
+        ], true)->applyClient();
+
+        $roles = (new RoleService($this->fakeToken()))->forUser(1)->inApp(1)->withPermissions()->listAll();
+
+        $this->assertCount(2, $roles);
+        $this->assertCount(2, $roles[0]['roles']);
+    }
+
     public function test_it_add_a_role_for_a_user()
     {
         $this->clientFake

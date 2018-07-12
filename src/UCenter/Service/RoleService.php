@@ -7,6 +7,8 @@ use Thinker\Exceptions\UCenterException;
 class RoleService extends Service
 {
 
+    private $appName;
+
     private $domainId;
 
     private $selfRelated = false;
@@ -34,7 +36,17 @@ class RoleService extends Service
             return $this->ucenterApi->getRolesInDomain($this->accessToken, $this->domainId);
         }
 
+        if ($this->appName) {
+            return $this->ucenterApi->getRolesWithPermissionsByUserInApp($this->accessToken, $this->appName, $this->userId);
+        }
+
         return $this->ucenterApi->getRolesInCurrentApp($this->accessToken);
+    }
+
+    public function inApp($name)
+    {
+        $this->appName = $name;
+        return $this;
     }
 
     public function inDomain($id)

@@ -16,6 +16,8 @@ class UCenterApi extends HttpClient
 
     public $redirect_uri;
 
+    public $scope;
+
     public function loadConfig($configurations)
     {
         foreach ($configurations as $key => $value) {
@@ -64,6 +66,7 @@ class UCenterApi extends HttpClient
             'client_id' => $this->client_id,
             'client_secret' => $this->client_secret,
             'grant_type' => 'authorization_code',
+            'scope' => $this->scope,
             'redirect_uri' => $this->redirect_uri,
             'code' => $code,
         ]);
@@ -80,6 +83,7 @@ class UCenterApi extends HttpClient
             'client_id' => $this->client_id,
             'client_secret' => $this->client_secret,
             'grant_type' => 'password',
+            'scope' => $this->scope,
             'username' => $username,
             'password' => $password,
         ]);
@@ -127,6 +131,7 @@ class UCenterApi extends HttpClient
         return $this->post('/api/wechat/accessToken', [
             'access_token' => $adminAccessToken,
             'openid' => $openId,
+            'scope' => $this->scope,
         ]);
     }
 
@@ -136,6 +141,7 @@ class UCenterApi extends HttpClient
             'client_id' => $this->client_id,
             'client_secret' => $this->client_secret,
             'grant_type' => 'refresh_token',
+            'scope' => $this->scope,
             'refresh_token' => $refreshAccessToken,
         ]);
     }
@@ -297,6 +303,21 @@ class UCenterApi extends HttpClient
         return array_filter($data, function ($item) {
             return !in_array($item->name, ['admin', 'developer']);
         });
+    }
+
+    public function getRolesWithPermissionsByUserInApp($accessToken, $userId, $appName)
+    {
+        $data = $this->get('/api/users/' . $userId . '/app/' . $appName . '/rolePermission', [
+            'access_token' => $accessToken,
+        ]);
+
+        return collect($data)->map(function ($domainInfo) {
+            return [
+                'domain_id' => $domainInfo->domain->id,
+                'domain_name' => $domainInfo->domain->name,
+                'roles' => $domainInfo->roles,
+            ];
+        })->values();
     }
 
     public function getRolesInDomain($accessToken, $domainId)

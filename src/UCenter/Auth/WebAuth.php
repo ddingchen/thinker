@@ -15,6 +15,13 @@ class WebAuth extends Auth
         return redirect(UCenterApi::urlOfAuthorizePage());
     }
 
+    public function token($code)
+    {
+        return new AccessToken(
+            UCenterApi::getAccessTokenByCode($code)
+        );
+    }
+
     public function user($code)
     {
         $accessToken = new AccessToken(
