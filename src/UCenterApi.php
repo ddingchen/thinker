@@ -312,11 +312,11 @@ class UCenterApi extends HttpClient
         ]);
 
         return collect($data)->map(function ($domainInfo) {
-            return [
+            return json_decode(json_encode([
                 'domain_id' => $domainInfo->domain->id,
                 'domain_name' => $domainInfo->domain->name,
                 'roles' => $domainInfo->roles,
-            ];
+            ]));
         })->values();
     }
 
