@@ -159,7 +159,7 @@ class RoleServiceTest extends TestCase
         $roles = (new RoleService($this->fakeToken()))->forUser(1)->inApp(1)->withPermissions()->listAll();
 
         $this->assertCount(2, $roles);
-        $this->assertCount(2, $roles[0]['roles']);
+        $this->assertCount(2, $roles[0]->roles);
     }
 
     public function test_it_add_a_role_for_a_user()
