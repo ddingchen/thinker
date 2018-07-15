@@ -10,6 +10,7 @@ use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Exceptions\Handler;
 use Orchestra\Testbench\TestCase as TestbenchTest;
+use Tests\EmptyExceptionHandler;
 use Thinker\Models\AccessToken;
 
 class TestCase extends TestbenchTest
@@ -49,21 +50,7 @@ class TestCase extends TestbenchTest
     protected function disableExceptionHandling()
     {
         $this->oldExceptionHandler = $this->app->make(ExceptionHandler::class);
-        $this->app->instance(ExceptionHandler::class, new class extends Handler
-        {
-            public function __construct()
-            {
-            }
-
-            public function report(\Exception $e)
-            {
-            }
-
-            public function render($request, \Exception $e)
-            {
-                throw $e;
-            }
-        });
+        $this->app->instance(ExceptionHandler::class, new EmptyExceptionHandler);
     }
 
     protected function withExceptionHandling()
