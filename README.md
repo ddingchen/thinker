@@ -5,7 +5,7 @@
 ## 使用须知
 
 + 需依赖Laravel框架运行
-+ 暂仅支持 **Laravel 5.4**
++ **Laravel 5.4+**
 + SDK本身不维护AccessToken的缓存
 
 ## 安装
@@ -18,14 +18,11 @@
 +           "url": "https://github.com/ddingchen/thinker"
 +       }
     ],
-    "require": {
-+       "ddingchen/thinker": "dev-master"
-    },
 ```
 
 项目目录下执行下述命令进行安装
 ```
-$ composer update ddingchen/thinker
+$ composer require ddingchen/thinker
 ```
 
 2. 添加下述代码至```{project}/config/app.php```
