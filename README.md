@@ -10,7 +10,7 @@
 
 ## 安装
 
-1. 添加下述配置至```{project}/package.json```
+1. 添加下述配置至```{project}/composer.json```
 ```diff
     "repositories": [
 +       {
