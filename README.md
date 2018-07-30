@@ -1,46 +1,63 @@
-# Thinker用户中心SDK
+# V2 TODO：
 
-用户中心接口封装
-
-## 使用须知
-
-+ 需依赖Laravel框架运行
-+ **Laravel 5.4+**
-+ SDK本身不维护AccessToken的缓存
-
-## 安装
-
-1. 添加下述配置至```{project}/composer.json```
-```diff
-    "repositories": [
-+       {
-+           "type": "vcs",
-+           "url": "https://github.com/ddingchen/thinker"
-+       }
-    ],
+## 1、API重构
+### AccessToken API:
+```php
+$accessToken->refresh();
+$accessToken->resource('mine'); // 等价于 new MyResource($accessToken)
+$accessToken->resource('user'); // 等价于 new UserResource($accessToken) 以下方法类推
+$accessToken->resource('domain');
+$accessToken->resource('app');
+$accessToken->resource('role');
 ```
 
-项目目录下执行下述命令进行安装
-```
-$ composer require ddingchen/thinker
-```
-
-2. 添加下述代码至```{project}/config/app.php```
-```diff
-     'providers' => [
-+        Thinker\Providers\UCenterServiceProvider::class,
-     ]
-```
-
-3. 项目目录下执行下述命令部署配置文件 ```{project}/config/ucenter.php```
-```
-$ artisan vendor:publish --provider="Thinker\Providers\UCenterServiceProvider"
+### MyResource API:
+```php
+$resource->profile();
+$resource->updateProfile(['field1' => 'value1', 'field2' => 'value2']);
+$resource->bindWechat($openid);
+$resource->unbindWechat($openid);
+$resource->domains();
+$resource->apps($domainId = null);
+$resource->roles($domainId = null);
+$resource->rolesWithPermissions($domainId = null);
 ```
 
-4. （可选）在.env文件中覆盖默认配置
+### UserResource API:
+```php
+$resource->list($domainId); // 获取指定域的所有用户
+$resource->find($userId); // 查找指定ID的用户
+$resource->findByName($name); // 查找指定名字的用户
+$resource->findByPhone($phone); // 查找指定电话的用户
+$resource->register($phone, $password, $username = null); // 注册用户
+$resource->delete($userId, $domainId); // 删除指定域的用户（的角色）
 ```
-#UCENTER_ROOT=http://my.ucenter.domain
-UCENTER_CLIENT_ID=YOUR_CLIENT_ID
-UCENTER_CLIENT_SECRET=YOUR_CLIENT_SECRET
-UCENTER_REDIRECT_URI=http://laravel-54.test/ucenter/login
+
+### DomainResource API:
+```php
+$service->search($keyword); // 获取包含指定关键字的所有域
+$service->find($domainId); // 查找指定ID的用户
+$service->create($name, $desc = null); // 创建域
+$service->updateDesc($domainId, $desc); // 更新域描述
+```
+
+### AppResource API:
+```php
+$service->list($domainId = null); // 获取指定域的所有应用
+```
+
+### RoleResource API:
+```php
+$service->list(); // 获取所有角色（当前应用）
+$service->listInDomain($domainId); // 获取指定域的所有角色（当前应用）
+$service->listOfUser($userId, $appId); // 获取某个用户的所有角色（指定应用）
+$service->addForUser($userId, $role, $domainId); // 设置用户在指定域的角色
+$service->removeForUser($userId, $role, $domainId); // 移除用户在指定域的角色
+$service->clearForUser($userId, $domainId); // 移除用户在指定域的所有角色
+```
+
+## 2、授权前增加可选自定义配置
+```php
+UCenter::webAuth()->token(request('code'));
+UCenter::mergeConfig(['field1' => 'value1', 'field2' => 'value2'])->webAuth()->token(request('code'));
 ```
