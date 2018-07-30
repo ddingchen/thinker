@@ -30,7 +30,7 @@ $resource->find($userId); // 查找指定ID的用户
 $resource->findByName($name); // 查找指定名字的用户
 $resource->findByPhone($phone); // 查找指定电话的用户
 $resource->register($phone, $password, $username = null); // 注册用户
-$resource->delete($userId, $domainId); // 删除指定域的用户（的角色）
+$resource->delete($userId, $domainId = null); // 删除指定域的用户（的角色）
 ```
 
 ### DomainResource API:
@@ -51,9 +51,9 @@ $resource->list($domainId = null); // 获取指定域的所有应用
 $resource->list(); // 获取所有角色（当前应用）
 $resource->listInDomain($domainId); // 获取指定域的所有角色（当前应用）
 $resource->listOfUser($userId, $appId); // 获取某个用户的所有角色（指定应用）
-$resource->addForUser($userId, $role, $domainId); // 设置用户在指定域的角色
-$resource->removeForUser($userId, $role, $domainId); // 移除用户在指定域的角色
-$resource->clearForUser($userId, $domainId); // 移除用户在指定域的所有角色
+$resource->addForUser($userId, $role, $domainId = null); // 设置用户在指定域的角色
+$resource->removeForUser($userId, $role, $domainId = null); // 移除用户在指定域的角色
+$resource->clearForUser($userId, $domainId = null); // 移除用户在指定域的所有角色
 ```
 
 ## 2、授权前增加可选自定义配置
