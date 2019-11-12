@@ -6,8 +6,8 @@ use Thinker\Facades\UCenterApi;
 
 class Register
 {
-    public function redirect()
+    public function redirect($redirectBack = null)
     {
-        return redirect(UCenterApi::urlOfRegisterPage());
+        return redirect(UCenterApi::urlOfRegisterPage($redirectBack));
     }
 }

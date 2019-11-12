@@ -45,13 +45,13 @@ class UCenterApi extends HttpClient
      *
      * @return mixed
      */
-    public function urlOfRegisterPage()
+    public function urlOfRegisterPage($redirectBack = null)
     {
         return sprintf(
-            '%s/auth/register?client_id=%s&redirect_uri=$s',
+            '%s/auth/register?client_id=%s&redirect_uri=%s',
             $this->root,
             $this->client_id,
-            $this->redirect_uri
+            $redirectBack ?: $this->redirect_uri
         );
     }
 
