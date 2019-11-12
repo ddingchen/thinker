@@ -41,6 +41,21 @@ class UCenterApi extends HttpClient
     }
 
     /**
+     * Url of ucenter register page
+     *
+     * @return mixed
+     */
+    public function urlOfRegisterPage()
+    {
+        return sprintf(
+            '%s/auth/register?client_id=%s&redirect_uri=$s',
+            $this->root,
+            $this->client_id,
+            $this->redirect_uri
+        );
+    }
+
+    /**
      * Url of reset password page
      *
      * @return mixed
